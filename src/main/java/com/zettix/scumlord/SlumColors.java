@@ -1,5 +1,8 @@
 package com.zettix.scumlord;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum SlumColors {
     GREEN,
     YELLOW,
@@ -24,4 +27,17 @@ public enum SlumColors {
                return "Unknown Color";
        }
     }
+
+    public static SlumColors fromString(String color) {
+        String lowColor = color.toLowerCase();
+        Map<String, SlumColors> slumColorsMap = new HashMap<>();
+        for (SlumColors slumColor : values()) {
+            slumColorsMap.put(slumColor.toString().toLowerCase(), slumColor);
+        }
+        if (slumColorsMap.containsKey(lowColor)) {
+            return slumColorsMap.get(color);
+        }
+        throw new IllegalArgumentException("Unknown color:" + color);
+    }
+
 }

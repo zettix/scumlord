@@ -37,7 +37,7 @@ public class TileAction {
         switch (effectTime) {
             case INSTANT:
                 break;
-            case RETROACTIVE:
+            case ONGOING:
                 sb.append(" when ");
                 break;
             case AFTER_NEW:
@@ -53,19 +53,19 @@ public class TileAction {
             case RED_LINE:
                 sb.append(" passing a red line ");
                 break;
-            case TILE_COLOR:
+            case COLOR:
                 for (SlumColors c : colors) {
                     sb.append(c);
                     sb.append(" ");
                 }
                 break;
-            case TILE_TAG:
+            case TAG:
                 for (TileTag t : tileTags) {
                     sb.append(t);
                     sb.append(" ");
                 }
                 break;
-            case TILE_NAME:
+            case NAME:
                 sb.append(name);
                 sb.append(" ");
                 break;

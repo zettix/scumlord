@@ -51,7 +51,7 @@ public class TileImplTest {
         SortedSet<SlumColors> badColors = new TreeSet<>();
         badColors.add(SlumColors.GREEN);
         badColors.add(SlumColors.GRAY);
-        TileAction action2 = new TileAction(TileEffectType.TILE_COLOR, TileEffectTime.RETROACTIVE, TileAreaEffect.ADJACENT,
+        TileAction action2 = new TileAction(TileEffectType.COLOR, TileEffectTime.ONGOING, TileAreaEffect.ADJACENT,
           badEffect);
         action2.setFilterColors(badColors);
         actions.add(action2);
@@ -83,7 +83,7 @@ public class TileImplTest {
         PlayerStatChange boost = new PlayerStatChange();
         boost.setReputationChange(1);
 
-        TileAction action2 = new TileAction(TileEffectType.TILE_COLOR, TileEffectTime.RETROACTIVE, TileAreaEffect.ADJACENT,
+        TileAction action2 = new TileAction(TileEffectType.COLOR, TileEffectTime.ONGOING, TileAreaEffect.ADJACENT,
                 boost);
         SortedSet<SlumColors> goodColors = new TreeSet<>();
         goodColors.add(SlumColors.BLUE);

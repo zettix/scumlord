@@ -1,8 +1,9 @@
 package com.zettix.scumlord;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface Tile {
+public interface Tile extends Serializable {
 
     // Setters
     Tile setName(String name);          // The Name of the tile.

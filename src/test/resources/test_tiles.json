@@ -1,0 +1,67 @@
+{
+  "tiles" :[
+     { 
+       "name": "Suburbs",
+       "cost": 3,
+       "color": "green",
+       "actions": [
+           {"type": "any",
+       "time": "instant",
+            "area": "any",
+            "change": {
+                "population": 3
+             }
+           }
+        ]
+      },
+      { 
+       "name": "Heavy Factory",
+       "cost": 3,
+       "color": "yellow",
+       "actions": [
+           {"type": "any",
+            "time": "instant",
+            "area": "any",
+            "change": {
+                "income": 1
+             }
+           },
+           {"type": "color",
+            "time": "ongoing",
+            "area": "adjacent",
+            "change": {
+                "reputation": -1
+            },
+            "colors": [
+               "green", "gray"
+            ]
+           }
+        ]
+      },
+     
+      { 
+       "name": "Community Park",
+       "cost": 4,
+       "color": "gray",
+       "actions": [
+          { "type": "any",
+            "time": "instant",
+            "area": "any",
+            "change": {
+                "income": -1
+             }
+          },
+          { "type": "color",
+            "time": "ongoing",
+            "area": "adjacent",
+            "change": {
+                "reputation": 1
+            },
+            "colors": [
+               "green", "blue", "yellow"
+            ]
+          }
+        ]
+      }
+  ]
+}
