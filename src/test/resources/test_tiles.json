@@ -1,7 +1,9 @@
 {
   "tiles" :[
+
      { 
        "name": "Suburbs",
+       "tier": "StartSuburbs",
        "cost": 3,
        "color": "green",
        "actions": [
@@ -14,8 +16,10 @@
            }
         ]
       },
+
       { 
        "name": "Heavy Factory",
+       "tier": "StartHeavyFactories",
        "cost": 3,
        "color": "yellow",
        "actions": [
@@ -41,6 +45,7 @@
      
       { 
        "name": "Community Park",
+       "tier": "StartCommunityParks",
        "cost": 4,
        "color": "gray",
        "actions": [
@@ -62,6 +67,149 @@
             ]
           }
         ]
-      }
+      },
+
+      { 
+       "name": "Domestic Airport",
+       "tier": "A",
+       "tag": "airport",
+       "cost": 11,
+       "color": "yellow",
+       "actions": [
+          { "type": "any",
+            "time": "instant",
+            "area": "any",
+            "change": {
+                "income": 1
+             }
+          },
+          { "type": "color",
+            "time": "ongoing",
+            "area": "adjacent",
+            "change": {
+                "reputation": -1
+            },
+            "colors": [
+               "green"
+            ]
+          },
+          { "type": "tag",
+            "time": "ongoing",
+            "area": "game_global",
+            "tags": [
+               "airport"
+            ],
+            "change": {
+               "income": 1
+            }
+          }
+        ]
+      },
+
+      { 
+       "name": "Boutique",
+       "tier": "A",
+       "cost": 9,
+       "color": "blue",
+       "actions": [
+          { "type": "any",
+            "time": "instant",
+            "area": "any",
+            "change": {
+                "income": 1
+             }
+          },
+          { "type": "color",
+            "time": "ongoing",
+            "area": "adjacent",
+            "colors": [
+               "green"
+            ],
+            "change": {
+                "reputation": 1
+             }
+          }
+        ]
+      },
+
+      { 
+       "name": "Shipping Center",
+       "tier": "A",
+       "cost": 15,
+       "color": "blue",
+       "actions": [
+          { "type": "any",
+            "time": "instant",
+            "area": "any",
+            "change": {
+                "reputation": 1
+             }
+          },
+          { "type": "color",
+            "time": "ongoing",
+            "area": "game_global",
+            "colors": [
+               "blue"
+            ],
+            "change": {
+                "funds": 2
+             }
+          }
+        ]
+      }, 
+
+      { 
+       "name": "Elementary School",
+       "tier": "A",
+       "tag": "school",
+       "cost": 5,
+       "color": "gray",
+       "actions": [
+          { "type": "any",
+            "time": "instant",
+            "area": "any",
+            "change": {
+                "reputation": 1
+             }
+          },
+          { "type": "color",
+            "time": "ongoing",
+            "area": "player_global",
+            "colors": [
+               "green"
+            ],
+            "change": {
+                "population": 1
+             }
+          }
+        ]
+      }, 
+
+      { 
+       "name": "University",
+       "tier": "A",
+       "cost": 15,
+       "color": "gray",
+       "actions": [
+          { "type": "any",
+            "time": "instant",
+            "area": "any",
+            "change": {
+                "income": 2
+             }
+          },
+          { "type": "tag",
+            "time": "ongoing",
+            "area": "player_global",
+            "tags": [
+               "school"
+            ],
+            "change": {
+                "reputation": 1
+             }
+          }
+        ]
+      } 
+
   ]
 }

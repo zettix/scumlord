@@ -9,14 +9,9 @@ public class TileAction {
         this.effectType = effectType;
         this.effectTime = effectTime;
         this.tileAreaEffect = tileAreaEffect;
-        this.name = "Default Action Name";
         this.colors = null;
         this.tileTags = null;
         this.change = change;
-    }
-
-    public void setFilterName(String name) {
-        this.name = name;
     }
 
     public void setFilterColors(SortedSet<SlumColors> colors) {
@@ -65,10 +60,6 @@ public class TileAction {
                     sb.append(" ");
                 }
                 break;
-            case NAME:
-                sb.append(name);
-                sb.append(" ");
-                break;
             default:
                 sb.append(" UNKNOWN EFFECT TYPE ");
         }
@@ -95,7 +86,6 @@ public class TileAction {
     private final TileEffectType effectType;
     private final TileEffectTime effectTime;
     private final TileAreaEffect tileAreaEffect;
-    private String name;
     private SortedSet<SlumColors> colors;
     private SortedSet<TileTag> tileTags;
     private PlayerStatChange change;

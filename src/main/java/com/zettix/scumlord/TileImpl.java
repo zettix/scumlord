@@ -14,11 +14,18 @@ public class TileImpl implements Tile {
         color = SlumColors.GREEN;
         tileTag = TileTag.NONE;
         actions = new ArrayList<>();
+        requirement = null;
+        tier = "A";
     }
 
     // Setters
     public Tile setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public Tile setTier(String tier) {
+        this.tier = tier;
         return this;
     }
 
@@ -45,14 +52,22 @@ public class TileImpl implements Tile {
         return this;
     }
 
+    public Tile setRequirement(TileAction requirement) {
+        this.requirement = requirement;
+        return this;
+    }
+
 
     // Getters:
     public String getName() { return name; }
+    public String getTier() { return tier; }
     public String getText() { return text; }
     public int getCost() { return cost; }
     public SlumColors getColor() { return color; }
     public TileTag getTileTag() {return tileTag;}
     public List<TileAction> getActions() { return actions; }
+    public TileAction getRequirement() { return requirement; }
+
 
     @Override
     public String toString() {
@@ -82,9 +97,11 @@ public class TileImpl implements Tile {
 
     // Private data:
     private String name;
+    private String tier;
     private String text;
     private int cost;
     private SlumColors color;
     private TileTag tileTag;
     List<TileAction> actions;
+    TileAction requirement;
 }

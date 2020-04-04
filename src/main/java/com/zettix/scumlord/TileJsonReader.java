@@ -45,6 +45,41 @@ public class TileJsonReader {
             List<TileAction> tileActions = new ArrayList<>();
             JsonObject jsonTile = j.getAsJsonObject();
             String name = jsonTile.get("name").getAsString();
+            String tier = jsonTile.get("tier").getAsString();
+            TileTag tag = null;
+            if (jsonTile.has("tag")) {
+                tag = TileTag.fromString(jsonTile.get("tag").getAsString());
+            }
+            TileAction requirement = null;
+            if (jsonTile.has("requirements")) {
+                JsonObject jRequrements = jsonTile.get("requirements").getAsJsonObject();
+                TileAreaEffect tileAreaEffect = TileAreaEffect.fromString(jRequrements.get("area").getAsString());
+                TileEffectTime tileEffectTime = TileEffectTime.fromString(jRequrements.get("time").getAsString());
+                TileEffectType tileEffectType = TileEffectType.fromString(jRequrements.get("type").getAsString());
+                requirement = new TileAction(tileEffectType, tileEffectTime, tileAreaEffect, null);
+                switch (tileEffectType) {
+                    case COLOR:
+                        SortedSet<SlumColors> actionColors = new TreeSet<>();
+                        JsonArray jColors = jRequrements.get("colors").getAsJsonArray();
+                        for (JsonElement jColorElement : jColors) {
+                            String stringColor = jColorElement.getAsString();
+                            actionColors.add(SlumColors.fromString(stringColor));
+                        }
+                        requirement.setFilterColors(actionColors);
+                        break;
+                    case TAG:
+                        SortedSet<TileTag> actionTags = new TreeSet<>();
+                        JsonArray jTags = jRequrements.get("tags").getAsJsonArray();
+                        for (JsonElement jTagElement : jTags) {
+                            String stringColor = jTagElement.getAsString();
+                            actionTags.add(TileTag.fromString(stringColor));
+                        }
+                        requirement.setFilterTags(actionTags);
+                        break;
+                    default:
+                        throw new UnsupportedOperationException("Unknown requirement:" + tileEffectType);
+                }
+            }
             int cost  = jsonTile.get("cost").getAsInt();
             SlumColors color = SlumColors.fromString(jsonTile.get("color").getAsString());
             JsonArray actions = jsonTile.getAsJsonArray("actions");
@@ -89,16 +124,18 @@ public class TileJsonReader {
                         }
                         tileAction.setFilterTags(actionTags);
                         break;
-                    case NAME:
-                        String stringName = action.get("name").getAsString();
-                        tileAction.setFilterName(stringName);
-                        break;
                     case RED_LINE:
                         break;
                 }
                 tileActions.add(tileAction);
             }
-            Tile tile = new TileImpl().setName(name).setColor(color).setCost(cost).setTileActions(tileActions);
+            Tile tile = new TileImpl().setName(name).setTier(tier).setColor(color).setCost(cost).setTileActions(tileActions);
+            if (tag != null) {
+                tile.setTileTag(tag);
+            }
+            if (requirement != null) {
+                tile.setRequirement(requirement);
+            }
             result.add(tile);
         }
         return result;

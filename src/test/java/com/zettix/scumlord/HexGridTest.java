@@ -42,5 +42,7 @@ public class HexGridTest {
         grid.setTile(suburb, hexPosition);
         Tile t = grid.getTile(hexPosition);
         assertEquals(t.getName(), suburb.getName());
+        Tile t2 = grid.getTile(new HexPosition(1, 1));
+        assertNull(t2);
     }
 }
