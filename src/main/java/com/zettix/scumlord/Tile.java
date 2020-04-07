@@ -7,7 +7,7 @@ public interface Tile extends Serializable {
 
     // Setters
     Tile setName(String name);          // The Name of the tile.
-    Tile setTier(String tier);          // The Tier of the tile (A, B, C)
+    Tile setSeries(TileSeries series);          // The Series of the tile (A, B, C)
     Tile setText(String name);          // Any coloring text.
     Tile setCost(int val);              // The cost of the tile.
     Tile setColor(SlumColors color);    // The color: Green, Blue, Gray, Ocean, etc.
@@ -17,7 +17,7 @@ public interface Tile extends Serializable {
 
     // Getters
     String getName();
-    String getTier();
+    TileSeries getSeries();
     String getText();
     int getCost();
     SlumColors getColor();

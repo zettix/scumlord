@@ -1,2 +1,225 @@
 {
+  "tiles": [
+    {
+      "name": "Suburbs",
+      "series": "Start",
+      "cost": 3,
+      "color": "green",
+      "actions": [
+        {
+          "type": "any",
+          "time": "instant",
+          "area": "any",
+          "change": {
+            "population": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "Heavy Factory",
+      "series": "Start",
+      "cost": 3,
+      "color": "yellow",
+      "actions": [
+        {
+          "type": "any",
+          "time": "instant",
+          "area": "any",
+          "change": {
+            "income": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "change": {
+            "reputation": -1
+          },
+          "colors": [
+            "green",
+            "gray"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Community Park",
+      "series": "Start",
+      "cost": 4,
+      "color": "gray",
+      "actions": [
+        {
+          "type": "any",
+          "time": "instant",
+          "area": "any",
+          "change": {
+            "income": -1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "change": {
+            "reputation": 1
+          },
+          "colors": [
+            "green",
+            "blue",
+            "yellow"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Domestic Airport",
+      "series": "A",
+      "tag": "airport",
+      "cost": 11,
+      "color": "yellow",
+      "actions": [
+        {
+          "type": "any",
+          "time": "instant",
+          "area": "any",
+          "change": {
+            "income": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "change": {
+            "reputation": -1
+          },
+          "colors": [
+            "green"
+          ]
+        },
+        {
+          "type": "tag",
+          "time": "ongoing",
+          "area": "game_global",
+          "tags": [
+            "airport"
+          ],
+          "change": {
+            "income": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "Boutique",
+      "series": "A",
+      "cost": 9,
+      "color": "blue",
+      "actions": [
+        {
+          "type": "any",
+          "time": "instant",
+          "area": "any",
+          "change": {
+            "income": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "colors": [
+            "green"
+          ],
+          "change": {
+            "reputation": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "Shipping Center",
+      "series": "A",
+      "cost": 15,
+      "color": "blue",
+      "actions": [
+        {
+          "type": "any",
+          "time": "instant",
+          "area": "any",
+          "change": {
+            "reputation": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "game_global",
+          "colors": [
+            "blue"
+          ],
+          "change": {
+            "funds": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "Elementary School",
+      "series": "A",
+      "tag": "school",
+      "cost": 5,
+      "color": "gray",
+      "actions": [
+        {
+          "type": "any",
+          "time": "instant",
+          "area": "any",
+          "change": {
+            "reputation": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "player_global",
+          "colors": [
+            "green"
+          ],
+          "change": {
+            "population": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "University",
+      "series": "A",
+      "cost": 15,
+      "color": "gray",
+      "actions": [
+        {
+          "type": "any",
+          "time": "instant",
+          "area": "any",
+          "change": {
+            "income": 2
+          }
+        },
+        {
+          "type": "tag",
+          "time": "ongoing",
+          "area": "player_global",
+          "tags": [
+            "school"
+          ],
+          "change": {
+            "reputation": 1
+          }
+        }
+      ]
+    }
+  ]
 }

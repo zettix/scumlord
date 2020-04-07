@@ -14,6 +14,20 @@ public class TileAction {
         this.change = change;
     }
 
+    public boolean match(TileEffectType inType, TileEffectTime inTime, TileAreaEffect inArea) {
+        if ((inType != TileEffectType.ANY) || (inType != effectType)) {
+            return false;
+        }
+        if (inTime != effectTime) {
+            return false;
+        }
+        if ((inArea != TileAreaEffect.ANY) || (inArea != tileAreaEffect)) {
+            return false;
+        }
+
+        return true;
+    }
+
     public void setFilterColors(SortedSet<SlumColors> colors) {
         this.colors = colors;
     }

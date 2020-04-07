@@ -1,21 +1,23 @@
 package com.zettix.scumlord;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TileImpl implements Tile {
 
     public TileImpl() {
+        // DATA
         name = "Default";
         text = "-";
+        series = TileSeries.START;
         cost = 0;
         color = SlumColors.GREEN;
         tileTag = TileTag.NONE;
+
+        // Requirements and effects
+
         actions = new ArrayList<>();
         requirement = null;
-        tier = "A";
     }
 
     // Setters
@@ -24,8 +26,8 @@ public class TileImpl implements Tile {
         return this;
     }
 
-    public Tile setTier(String tier) {
-        this.tier = tier;
+    public Tile setSeries(TileSeries series) {
+        this.series = series;
         return this;
     }
 
@@ -60,7 +62,7 @@ public class TileImpl implements Tile {
 
     // Getters:
     public String getName() { return name; }
-    public String getTier() { return tier; }
+    public TileSeries getSeries() { return series; }
     public String getText() { return text; }
     public int getCost() { return cost; }
     public SlumColors getColor() { return color; }
@@ -97,7 +99,7 @@ public class TileImpl implements Tile {
 
     // Private data:
     private String name;
-    private String tier;
+    private TileSeries series;
     private String text;
     private int cost;
     private SlumColors color;

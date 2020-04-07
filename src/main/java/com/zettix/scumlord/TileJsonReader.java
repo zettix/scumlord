@@ -7,7 +7,6 @@ import com.google.gson.JsonParser;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -45,7 +44,7 @@ public class TileJsonReader {
             List<TileAction> tileActions = new ArrayList<>();
             JsonObject jsonTile = j.getAsJsonObject();
             String name = jsonTile.get("name").getAsString();
-            String tier = jsonTile.get("tier").getAsString();
+            TileSeries series = TileSeries.fromString(jsonTile.get("series").getAsString());
             TileTag tag = null;
             if (jsonTile.has("tag")) {
                 tag = TileTag.fromString(jsonTile.get("tag").getAsString());
@@ -129,7 +128,7 @@ public class TileJsonReader {
                 }
                 tileActions.add(tileAction);
             }
-            Tile tile = new TileImpl().setName(name).setTier(tier).setColor(color).setCost(cost).setTileActions(tileActions);
+            Tile tile = new TileImpl().setName(name).setSeries(series).setColor(color).setCost(cost).setTileActions(tileActions);
             if (tag != null) {
                 tile.setTileTag(tag);
             }
