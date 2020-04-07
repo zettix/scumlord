@@ -1,5 +1,6 @@
 package com.zettix.scumlord;
 
+import com.zettix.scumlord.hexgrid.HexPosition;
 import org.junit.Before;
 import org.junit.Test;
 

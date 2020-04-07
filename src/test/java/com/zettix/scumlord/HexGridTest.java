@@ -1,5 +1,10 @@
 package com.zettix.scumlord;
 
+import com.zettix.scumlord.hexgrid.HexGrid;
+import com.zettix.scumlord.hexgrid.HexPosition;
+import com.zettix.scumlord.tile.SlumColors;
+import com.zettix.scumlord.tile.Tile;
+import com.zettix.scumlord.tile.TileImpl;
 import org.junit.Before;
 import org.junit.Test;
 

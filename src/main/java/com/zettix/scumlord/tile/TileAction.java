@@ -1,4 +1,6 @@
-package com.zettix.scumlord;
+package com.zettix.scumlord.tile;
+
+import com.zettix.scumlord.PlayerStatChange;
 
 import java.util.SortedSet;
 

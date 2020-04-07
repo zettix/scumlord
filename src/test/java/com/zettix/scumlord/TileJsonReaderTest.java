@@ -1,5 +1,8 @@
 package com.zettix.scumlord;
 
+import com.zettix.scumlord.tile.SlumColors;
+import com.zettix.scumlord.tile.Tile;
+import com.zettix.scumlord.tile.TileJsonReader;
 import org.junit.Test;
 
 import java.io.InputStream;
@@ -22,10 +25,10 @@ public class TileJsonReaderTest {
         PlayerStatChange res = tile.getActions().get(0).getChange();
         assertEquals(res.getFundsChange(), 0);
         assertEquals(tile.getColor(), SlumColors.GREEN);
-        assertEquals(res.getPopulationChange(), 3);
+        assertEquals(res.getPopulationChange(), 2);
 
         String[] expecteds = {
-                "Suburbs [$: 3 ][c: Green]<<[p:3]>>",
+                "Suburbs [$: 3 ][c: Green]<<[p:2]>>",
                 "Heavy Factory [$: 3 ][c: Yellow]<<[i:1]>>< when Green Gray  is adjacent <[r:-1]>>",
                 "Community Park [$: 4 ][c: Gray]<<[i:-1]>>< when Green Yellow Blue  is adjacent <[r:1]>>",
                 "Domestic Airport [$: 11 ][c: Yellow ][t: Airport]<<[i:1]>>< when Green  is adjacent <[r:-1]>>< when Airport  of all tiles <[i:1]>>",

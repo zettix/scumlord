@@ -1,6 +1,8 @@
 package com.zettix.scumlord;
 
-import java.lang.management.GarbageCollectorMXBean;
+import com.zettix.scumlord.hexgrid.HexGrid;
+import com.zettix.scumlord.hexgrid.HexPosition;
+
 import java.util.HashSet;
 import java.util.Set;
 

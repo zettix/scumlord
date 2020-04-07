@@ -1,5 +1,7 @@
 package com.zettix.scumlord;
 
+import com.zettix.scumlord.hexgrid.HexGrid;
+import com.zettix.scumlord.tile.TileSeries;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,9 +1,10 @@
-package com.zettix.scumlord;
+package com.zettix.scumlord.tile;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.zettix.scumlord.PlayerStatChange;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;

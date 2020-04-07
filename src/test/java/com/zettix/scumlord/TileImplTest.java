@@ -6,6 +6,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.logging.Logger;
 
+import com.zettix.scumlord.tile.*;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

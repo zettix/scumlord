@@ -1,4 +1,4 @@
-package com.zettix.scumlord;
+package com.zettix.scumlord.hexgrid;
 
 // A HexGrid is a grid on a hexagon.
 // This is isometric to square grid, see image.
@@ -24,6 +24,8 @@ package com.zettix.scumlord;
 //    if y even, y = y * 2.236 + 1.118, x = 1.118 + x * 3
 //
 
+
+import com.zettix.scumlord.tile.Tile;
 
 import java.util.*;
 
