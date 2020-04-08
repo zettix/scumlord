@@ -1,7 +1,9 @@
 package com.zettix.scumlord.hexgrid;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class HexPosition {
     public HexPosition(int x, int y) {
@@ -28,8 +30,8 @@ public class HexPosition {
     private static final int[] neighborMapX = {-1, 0, 1, 1, 0, -1};
     private static final int[] neighborMapY = { 0, 1, 0,-1,-1, -1};
 
-    public List<HexPosition> getNeighbors() {
-        List<HexPosition> result = new ArrayList<>();
+    public Set<HexPosition> getNeighbors() {
+        Set<HexPosition> result = new HashSet<>();
         for (int i = 0; i < 6; i++) {
             int dx = neighborMapX[i] + x;
             int dy = neighborMapY[i] + y;

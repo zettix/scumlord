@@ -1,4 +1,4 @@
-package com.zettix.scumlord;
+package com.zettix.scumlord.hexgrid;
 
 import com.zettix.scumlord.hexgrid.HexGrid;
 import com.zettix.scumlord.hexgrid.HexPosition;

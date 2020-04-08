@@ -7,20 +7,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Player {
-    public Player(String name, Game game) {
+    public Player(String name, PlayerStatChange change) {
         this.name = name;
-        this.game = game;
         board = new HexGrid();
-        income = 0;
-        funds = 0;
-        reputation = 0;
-        score = 0;
+        income = change.getIncomeChange();
+        funds = change.getFundsChange();
+        reputation = change.getReputationChange();
+        score = change.getPopulationChange();
         globalPlayerTiles = new HashSet<>();
         adjecentEffectTiles = new HashSet<>();
     }
 
-    public void InitGrid() {
-        game.InitTiles(board, this);
+    public HexGrid getBoard() {
+        return board;
     }
 
     public void applyChange(PlayerStatChange change) {
@@ -38,14 +37,32 @@ public class Player {
         adjecentEffectTiles.add(p);
     }
 
-    public int getIncome() {return  income;}
-    public int getFunds() {return  funds;}
-    public int getReputation() {return  reputation;}
-    public int getScore() {return  score;}
+    Set<HexPosition> getAdjacentEffectTile() {
+        return adjecentEffectTiles;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getIncome() {
+        return  income;
+    }
+
+    public int getFunds() {
+        return  funds;
+    }
+
+    public int getReputation() {
+        return  reputation;
+    }
+
+    public int getScore() {
+        return  score;
+    }
 
     private String name = "Anonymous";
     private final HexGrid board;
-    private final Game game;
     private int income;
     private int funds;
     private int reputation;

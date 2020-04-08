@@ -27,17 +27,34 @@ public class GameTest {
     @Test
     public void initTiles() {
         game.Load();
-        HexGrid board = new HexGrid();
-        Player player = new Player("Test Player", game);
-        game.InitTiles(board, player);
-        assertEquals(player.getFunds(), 0);
+        PlayerStatChange change = new PlayerStatChange().setFundsChange(15);
+        Player player = new Player("Test Player", change);
+        game.AddPlayer(player);
+        game.InitTiles(player);
+        assertEquals(player.getFunds(), 15);
         assertEquals(player.getIncome(), 0);
-        assertEquals(player.getReputation(), 0);
+        assertEquals(player.getReputation(), 1);
         assertEquals(player.getScore(), 2);
     }
 
     @Test
     public void initAllPlayerTiles() {
+        game.Load();
+        PlayerStatChange change = new PlayerStatChange().setFundsChange(15);
+        Player player = new Player("Test Player", change);
+        game.AddPlayer(player);
+        Player player2 = new Player("Test Player the Second", change);
+        game.AddPlayer(player2);
+
+        game.InitAllPlayerTiles();
+        assertEquals(player.getFunds(), 15);
+        assertEquals(player.getIncome(), 0);
+        assertEquals(player.getReputation(), 1);
+        assertEquals(player.getScore(), 2);
+        assertEquals(player2.getFunds(), 15);
+        assertEquals(player2.getIncome(), 0);
+        assertEquals(player2.getReputation(), 1);
+        assertEquals(player2.getScore(), 2);
     }
 
     private Game game;

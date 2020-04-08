@@ -1,4 +1,4 @@
-package com.zettix.scumlord;
+package com.zettix.scumlord.hexgrid;
 
 import com.zettix.scumlord.hexgrid.HexPosition;
 import org.junit.Before;
@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -31,7 +32,7 @@ public class HexPositionTest {
 
     @Test
     public void getNeighbors() {
-        List<HexPosition> positions = hexPosition.getNeighbors();
+        Set<HexPosition> positions = hexPosition.getNeighbors();
         List<HexPosition> expected = new ArrayList<>();
         expected.add(new HexPosition(0, 2));
         expected.add(new HexPosition(1, 3));
@@ -39,7 +40,8 @@ public class HexPositionTest {
         expected.add(new HexPosition(2, 1));
         expected.add(new HexPosition(1, 1));
         for (int i = 0; i < expected.size(); i++) {
-            assertEquals(positions.get(i), expected.get(i));
+            assertTrue(positions.contains(expected.get(i)));
+            assertFalse(positions.contains(new HexPosition(i, i + 3)));
         }
     }
 
