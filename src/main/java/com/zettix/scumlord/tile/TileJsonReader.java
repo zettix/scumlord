@@ -85,9 +85,15 @@ public class TileJsonReader {
             JsonArray actions = jsonTile.getAsJsonArray("actions");
             for (JsonElement k : actions) {
                 JsonObject action = k.getAsJsonObject();
-                TileAreaEffect tileAreaEffect = TileAreaEffect.fromString(action.get("area").getAsString());
+                TileAreaEffect tileAreaEffect = TileAreaEffect.ANY;
+                if (action.has("area")) {
+                    tileAreaEffect = TileAreaEffect.fromString(action.get("area").getAsString());
+                }
+                TileEffectType tileEffectType = TileEffectType.ANY;
+                if (action.has("type")) {
+                    tileEffectType = TileEffectType.fromString(action.get("type").getAsString());
+                }
                 TileEffectTime tileEffectTime = TileEffectTime.fromString(action.get("time").getAsString());
-                TileEffectType tileEffectType = TileEffectType.fromString(action.get("type").getAsString());
                 PlayerStatChange change = new PlayerStatChange();
                 JsonObject jChange = action.get("change").getAsJsonObject();
                 if (jChange.has("reputation")) {

@@ -84,47 +84,32 @@ public class Game {
         for (int idx = 0; idx < 3; idx++) {
             Tile t = placeMe[idx];
             HexPosition hexPosition = placePos[idx];
-            // 1: place tile. 2: apply instants. 3: track ongoing. 4: apply ongoings.
-            board.setTile(t, hexPosition);
-            //  2.
-            List<TileAction> actions = t.getActions();
-            for (TileAction action : actions) {
-                if (action.match(TileEffectType.ANY, TileEffectTime.INSTANT, TileAreaEffect.ANY)) {
-                    // apply instant action.
+            PlaceTile(player, t, hexPosition);
+        }
+    }
+
+    private void ApplyColorOrTagEffect(Player owningPlayer, Tile specialTile, Tile curiosTile) {
+        for (TileAction action : specialTile.getActions()) {
+            if (action.match(TileEffectType.COLOR, TileEffectTime.ONGOING, TileAreaEffect.ANY)) {
+                SortedSet<SlumColors> targetColors = action.getFilterColors();
+                SlumColors color = curiosTile.getColor();
+                if (targetColors.contains(color)) { // run that action...
                     PlayerStatChange change = action.getChange();
-                    player.applyChange(change);
-                } else {
-                    // store ongoing actions.
-                    if (action.match(TileEffectType.ANY, TileEffectTime.ONGOING, TileAreaEffect.ANY)) {
-                        if (action.match(TileEffectType.ANY, TileEffectTime.ONGOING, TileAreaEffect.PLAYER_GLOBAL)) {
-                            player.addTileToGlobals(hexPosition);
-                        }
-                        if (action.match(TileEffectType.ANY, TileEffectTime.ONGOING, TileAreaEffect.ADJACENT)) {
-                            player.addTileToAdjacents(hexPosition);
-                        }
-                        if (action.match(TileEffectType.ANY, TileEffectTime.ONGOING, TileAreaEffect.GAME_GLOBAL)) {
-                            Set<HexPosition> hexPositions = null;
-                            if (globalTilesWithEffects.containsKey(player)) {
-                                hexPositions = globalTilesWithEffects.get(player);
-                            } else {
-                                hexPositions = new HashSet<>();
-                                globalTilesWithEffects.put(player, hexPositions);
-                            }
-                            hexPositions.add(hexPosition);
-                        }
-                    }
+                    owningPlayer.applyChange(change);
                 }
             }
-            // apply any pending actions.
-            ApplyGlobalChanges(player, hexPosition, t);
-            // have player apply any pending actions.
-            ApplyAdjacentChanges(player, hexPosition, t);
+            if (action.match(TileEffectType.TAG, TileEffectTime.ONGOING, TileAreaEffect.ANY)) {
+                SortedSet<TileTag> targetTags = action.getFilterTags();
+                TileTag tileTag = curiosTile.getTileTag();
+                if (targetTags.contains(tileTag)) {
+                    PlayerStatChange change = action.getChange();
+                    owningPlayer.applyChange(change);
+                }
+            }
         }
     }
 
     public void ApplyAdjacentChanges(Player player, HexPosition position, Tile tile) {
-        // When tile places, check if position matches any in hotlist generated from player's adjacent list.
-
         Set<HexPosition> effectTiles = player.getAdjacentEffectTile();
         HexGrid board = player.getBoard();
         for (HexPosition effectPosition: effectTiles) {
@@ -132,28 +117,10 @@ public class Game {
             if (sensitivePositions.contains(position)) {
                 // The tile's position overlaps a neighboring site of a tile with adjacent actions.
                 Tile effectTile = board.getTile(effectPosition);
-                for (TileAction action : effectTile.getActions()) {
-                    if (action.match(TileEffectType.COLOR, TileEffectTime.ONGOING, TileAreaEffect.ANY)) {
-                        SortedSet<SlumColors> targetColors = action.getFilterColors();
-                        SlumColors color = tile.getColor();
-                        if (targetColors.contains(color)) { // run that action...
-                            PlayerStatChange change = action.getChange();
-                            player.applyChange(change);
-                        }
-                    }
-                    if (action.match(TileEffectType.TAG, TileEffectTime.ONGOING, TileAreaEffect.ANY)) {
-                        SortedSet<TileTag> targetTags = action.getFilterTags();
-                        TileTag tileTag = tile.getTileTag();
-                        if (targetTags.contains(tileTag)) {
-                            PlayerStatChange change = action.getChange();
-                            player.applyChange(change);
-                        }
-                    }
-                }
+                ApplyColorOrTagEffect(player, effectTile, tile);
             }
         }
     }
-
 
     public void ApplyGlobalChanges(Player player, HexPosition position, Tile tile) {
         for (Player gobalPlayer : globalTilesWithEffects.keySet()) {
@@ -162,27 +129,55 @@ public class Game {
             for (HexPosition ongoingPosition : positions) {
                 // Get effects for this ongoing position:
                 Tile specialTile = board.getTile(ongoingPosition);
-                for (TileAction action : specialTile.getActions()) {
-                    // all of these have TileEffectTime.ONGOING because of construction.
-                    if (action.match(TileEffectType.COLOR, TileEffectTime.ONGOING, TileAreaEffect.ANY)) {
-                        SortedSet<SlumColors> targetColors = action.getFilterColors();
-                        SlumColors color = tile.getColor();
-                        if (targetColors.contains(color)) { // run that action...
-                            PlayerStatChange change = action.getChange();
-                            gobalPlayer.applyChange(change);
-                        }
+                ApplyColorOrTagEffect(gobalPlayer, specialTile, tile);
+            }
+        }
+    }
+
+    public void PlaceTile(Player player, Tile tile, HexPosition position) {
+        HexGrid board = player.getBoard();
+        // 1: place tile. 2: apply instants. 3: track ongoing. 4: apply ongoings.
+        board.setTile(tile, position);
+        //  2.
+        List<TileAction> actions = tile.getActions();
+        for (TileAction action : actions) {
+            if (action.match(TileEffectType.ANY, TileEffectTime.INSTANT, TileAreaEffect.ANY)) {
+                // apply instant action.
+                PlayerStatChange change = action.getChange();
+                player.applyChange(change);
+            } else {
+                // store ongoing actions.
+                if (action.match(TileEffectType.ANY, TileEffectTime.ONGOING, TileAreaEffect.ANY)) {
+                    if (action.match(TileEffectType.ANY, TileEffectTime.ONGOING, TileAreaEffect.PLAYER_GLOBAL)) {
+                        player.addTileToGlobals(position);
                     }
-                    if (action.match(TileEffectType.TAG, TileEffectTime.ONGOING, TileAreaEffect.ANY)) {
-                        SortedSet<TileTag> targetTags = action.getFilterTags();
-                        TileTag tileTag = tile.getTileTag();
-                        if (targetTags.contains(tileTag)) {
-                            PlayerStatChange change = action.getChange();
-                            gobalPlayer.applyChange(change);
+                    if (action.match(TileEffectType.ANY, TileEffectTime.ONGOING, TileAreaEffect.ADJACENT)) {
+                        player.addTileToAdjacents(position);
+                    }
+                    if (action.match(TileEffectType.ANY, TileEffectTime.ONGOING, TileAreaEffect.GAME_GLOBAL)) {
+                        Set<HexPosition> hexPositions = null;
+                        if (globalTilesWithEffects.containsKey(player)) {
+                            hexPositions = globalTilesWithEffects.get(player);
+                        } else {
+                            hexPositions = new HashSet<>();
+                            globalTilesWithEffects.put(player, hexPositions);
                         }
+                        hexPositions.add(position);
                     }
                 }
             }
         }
+        // apply any pending actions.
+        ApplyGlobalChanges(player, position, tile);
+        // have player apply any pending actions.
+        ApplyAdjacentChanges(player, position, tile);
+    }
+
+    public List<Tile> getTilesBySeries(TileSeries series) {
+        if (seriesTiles.containsKey(series)) {
+            return seriesTiles.get(series);
+        }
+        return new ArrayList<>();
     }
 
     public void InitAllPlayerTiles() {
