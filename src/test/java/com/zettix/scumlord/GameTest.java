@@ -90,11 +90,12 @@ public class GameTest {
                 new HexPosition(0, 7),
                 new HexPosition(0, 8),
         };
-        int[] expectedScore = {2, 3, 4, 6, 9, 12};
-        int[] expectedIncome = {0, 2, 3, 3, 3, 5};
-        int[] expectedReputation = {1, 1, 1, 2, 3, 3};
-        int[] expectedFunds = {15, 17, 20, 25, 28, 33};
+        int[] expectedScore = {2, 3, 4, 5, 7, 9};
+        int[] expectedIncome = {0, 2, 3, 4, 4, 6};
+        int[] expectedReputation = {1, 1, 1, 1, 2, 2};
+        int[] expectedFunds = {15, 17, 20, 26, 30, 36};
         for (int idx = 0; idx < tilesToAdd.length; idx++) {
+            System.out.println("idx:"+idx);
             assertEquals(player.getScore(), expectedScore[idx]);
             assertEquals(player.getIncome(), expectedIncome[idx]);
             assertEquals(player.getReputation(), expectedReputation[idx]);
