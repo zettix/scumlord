@@ -17,14 +17,20 @@ public class GenerateTiles {
 
    public GenerateTiles() {
 
+      Font[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
+      for (Font font: fonts) {
+         System.out.println("System Font: " + font.toString());
+      }
+
    }
+
 
    private Color getColor(SlumColors inColor) {
       switch (inColor) {
          case GREEN:
-            return new Color(0, 200, 0, 200);
+            return new Color(0, 200, 0, 255);
          case BLUE:
-            return new Color(20, 140, 255, 155);
+            return new Color(20, 140, 255, 255);
          case YELLOW:
             return new Color(195, 195, 0, 255);
          case GRAY:
@@ -36,9 +42,45 @@ public class GenerateTiles {
       }
    }
 
+   private void drawHexagon(Graphics2D graphics2d) {
+      int[] xpoints = new int[6];
+      int[] ypoints = new int[6];
+      double r = ySize / 2;
+
+      for (int idx = 0; idx < xpoints.length; idx++) {
+         double factor = (double) idx / 6.0;
+         double theta = Math.PI * 2.0 * factor;
+         double x = r * Math.cos(theta);
+         double y = r * Math.sin(theta);
+         xpoints[idx] = (int) (x + r);
+         ypoints[idx] = (int) (y + r);
+      }
+      Polygon polygon = new Polygon(xpoints, ypoints, 6);
+      graphics2d.fillPolygon(polygon);
+   }
+
+   private void drawTitle(Graphics2D graphics2d, String title, int fontsize) {
+      int ypos = 32 + fontsize;
+      String[] parts = title.split(" ");
+      for (String part : parts) {
+         int namelen = part.length() * 3 * fontsize / 7;
+         graphics2d.drawString(part, xSize / 2 - namelen, ypos);
+         ypos += 5 + fontsize;
+      }
+   }
+
+   private void drawCost(Graphics2D graphics2d, int cost, int fontsize) {
+      int ypos = ySize / 2 - (int)(ySize * 0.1);
+      int xpos = (int) (xSize * 0.12);
+      String s = "$" + cost;
+      graphics2d.drawString(s, xpos, ypos);
+   }
+
    public void PaintImages() {
       Color WHITE = new Color(255, 255, 255, 255);
-      int fontsize = 10;
+      Color CLEAR = new Color(0, 0, 0, 0);
+      int fontsize = 18;
+      String fontname = "Bitstream Vera Serif";
       String outdir = "src/main/resources/";
 
       System.out.println("Writing tile images.");
@@ -52,15 +94,18 @@ public class GenerateTiles {
             Graphics graphics = image.getGraphics();
             Graphics2D graphics2D = (Graphics2D) graphics;
             Color color =  getColor(tile.getColor());
-            Font font = new Font("Helvetica", Font.BOLD, fontsize);
+            Font font = new Font(fontname, Font.BOLD, fontsize);
             graphics2D.setFont(font);
-            graphics2D.setColor(color);
+            graphics2D.setColor(CLEAR);
             graphics2D.fillRect(0,0, xSize, ySize);
+            graphics2D.setColor(color);
+            drawHexagon(graphics2D);
             graphics2D.setBackground(color);
             graphics2D.setColor(WHITE);
-            int namelen = tile.getName().length() * fontsize  / 3;
-            graphics2D.drawString(tile.getName(), xSize / 2 - namelen, 30);
-            //graphics2D.drawString(tile.getName(), 10, 10);
+            drawTitle(graphics2D, tile.getName().toUpperCase(), fontsize);
+            font = new Font(fontname, Font.BOLD, fontsize + 5);
+            graphics.setFont(font);
+            drawCost(graphics2D, tile.getCost(), fontsize);
 
             String outname = tile.getName().replace(" ", "_");
             File outputfile = new File(outdir + "Tile_" + series.toString()
@@ -80,6 +125,6 @@ public class GenerateTiles {
       generateTiles.PaintImages();
    }
 
-   private int xSize = 100;
-   private int ySize = 100;
+   private int xSize = 256;
+   private int ySize = 256;
 }
