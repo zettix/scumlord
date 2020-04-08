@@ -1,5 +1,8 @@
 ## Scumlord: Hexagonal Tile Game
 
+## Build Status
+![Java CI with Maven](https://github.com/zettix/scumlord/workflows/Java%20CI%20with%20Maven/badge.svg)
+
 ## Tiles have the following properties:
 
 ### Data:
