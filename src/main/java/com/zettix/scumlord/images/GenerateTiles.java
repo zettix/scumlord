@@ -18,7 +18,7 @@ public class GenerateTiles {
    public GenerateTiles() {
 
       Font[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
-      for (Font font: fonts) {
+      for (Font font : fonts) {
          System.out.println("System Font: " + font.toString());
       }
 
@@ -37,7 +37,7 @@ public class GenerateTiles {
             return new Color(128, 128, 128, 255);
          case OCEAN:
             return new Color(0, 0, 128, 255);
-         default :
+         default:
             return new Color(0, 255, 255, 255);
       }
    }
@@ -70,7 +70,7 @@ public class GenerateTiles {
    }
 
    private void drawCost(Graphics2D graphics2d, int cost, int fontsize) {
-      int ypos = ySize / 2 - (int)(ySize * 0.1);
+      int ypos = ySize / 2 - (int) (ySize * 0.1);
       int xpos = (int) (xSize * 0.12);
       String s = "$" + cost;
       graphics2d.drawString(s, xpos, ypos);
@@ -81,23 +81,23 @@ public class GenerateTiles {
       Color CLEAR = new Color(0, 0, 0, 0);
       int fontsize = 18;
       String fontname = "Bitstream Vera Serif";
-      String outdir = "src/main/resources/";
+      String outdir = "src/main/resources/images/";
 
       System.out.println("Writing tile images.");
       Game game = new Game();
       game.Load();
       for (TileSeries series : TileSeries.values()) {
-         List<Tile> tileList =  game.getTilesBySeries(series);
+         List<Tile> tileList = game.getTilesBySeries(series);
          System.out.println("Writing Series " + series + " images[" + tileList.size() + "].");
          for (Tile tile : tileList) {
             BufferedImage image = new BufferedImage(xSize, ySize, BufferedImage.TYPE_INT_ARGB);
             Graphics graphics = image.getGraphics();
             Graphics2D graphics2D = (Graphics2D) graphics;
-            Color color =  getColor(tile.getColor());
+            Color color = getColor(tile.getColor());
             Font font = new Font(fontname, Font.BOLD, fontsize);
             graphics2D.setFont(font);
             graphics2D.setColor(CLEAR);
-            graphics2D.fillRect(0,0, xSize, ySize);
+            graphics2D.fillRect(0, 0, xSize, ySize);
             graphics2D.setColor(color);
             drawHexagon(graphics2D);
             graphics2D.setBackground(color);
@@ -113,7 +113,7 @@ public class GenerateTiles {
             try {
                ImageIO.write(image, "png", outputfile);
             } catch (IOException e) {
-               System.err.println("Cound not write file!" + e.getMessage());
+               System.err.println("Could not write file!" + e.getMessage());
                return;
             }
          }
