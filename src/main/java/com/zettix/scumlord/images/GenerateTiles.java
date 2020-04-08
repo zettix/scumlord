@@ -1,44 +1,111 @@
 package com.zettix.scumlord.images;
 
 import com.zettix.scumlord.Game;
-import com.zettix.scumlord.tile.SlumColors;
-import com.zettix.scumlord.tile.Tile;
-import com.zettix.scumlord.tile.TileSeries;
+import com.zettix.scumlord.Player;
+import com.zettix.scumlord.PlayerStatChange;
+import com.zettix.scumlord.tile.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.sql.Statement;
 import java.util.List;
+
+import static com.zettix.scumlord.images.ColorSwatch.*;
+
+/// ddddd-dinbats zapf.
+// for tags. yay, and free.
+
 
 public class GenerateTiles {
 
    public GenerateTiles() {
 
       Font[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
-      for (Font font : fonts) {
-         System.out.println("System Font: " + font.toString());
+      File out = new File("allfonts");
+      try {
+         Writer writer = new FileWriter(out);
+         BufferedWriter bufferedWriter = new BufferedWriter(writer);
+         for (Font font : fonts) {
+            bufferedWriter.write(font.toString() + "\n");
+         }
+         bufferedWriter.close();
+         writer.close();
+      } catch (IOException e) {
+         System.out.println("Could not collect font info. " + e.getMessage());
       }
-
+   }
+   private void DrawFundsChange(Graphics2D g, int change, int xpos, int ypos, int fontsize) {
+      g.drawString("$" + change, xpos, ypos);
    }
 
+   private void DrawIncomeChange(Graphics2D g, int change, int xpos, int ypos, int fontsize) {
+       int rad = fontsize * 2;
+       String sign = "+";
+      int diff = (int) (rad * .25);
+       if (change > 0) {
+          g.setColor(Color.BLACK);
+       } else {
+          g.setColor(Color.RED);
+          sign = " ";
+       }
+       int yoff = (int) (fontsize * 1.5);
+      g.fillOval(xpos - diff / 2 , ypos - yoff - diff / 2 , rad + diff, rad + diff);
+      g.setColor(Color.WHITE);
+      rad = fontsize * 2;
+      g.fillOval(xpos , ypos  - yoff, rad, rad);
+      g.setColor(Color.BLACK);
+      g.drawString(sign + change, xpos, ypos);
+   }
 
-   private Color getColor(SlumColors inColor) {
-      switch (inColor) {
-         case GREEN:
-            return new Color(0, 200, 0, 255);
-         case BLUE:
-            return new Color(20, 140, 255, 255);
-         case YELLOW:
-            return new Color(195, 195, 0, 255);
-         case GRAY:
-            return new Color(128, 128, 128, 255);
-         case OCEAN:
-            return new Color(0, 0, 128, 255);
-         default:
-            return new Color(0, 255, 255, 255);
+   private void DrawReputationChange(Graphics2D g, int change, int xpos, int ypos, int fontsize) {
+      //xpos -= (fontsize * 0.5);
+      int rad = (int) (fontsize * 1.8);
+      String sign = "+";
+      int diff = (int) (rad * .25);
+      if (change > 0) {
+         g.setColor(Color.WHITE);
+      } else {
+         g.setColor(Color.RED);
+         sign = " ";
+      }
+      int yoff = (int) (fontsize * 1.5);
+      g.fillRect(xpos - diff / 2 , ypos - yoff - diff / 2 , rad + diff, rad + diff);
+      g.setColor(Color.BLACK);
+      rad = (int) (fontsize * 1.8);
+      g.fillRect(xpos , ypos  - yoff, rad, rad);
+      g.setColor(Color.WHITE);
+      g.drawString(sign + change, xpos, ypos);
+   }
+
+   private void DrawPopulationChange(Graphics2D g, int change, int xpos, int ypos, int fontsize) {
+      String sign = "+";
+       if (change > 0) {
+          g.setColor(WHITE);
+       } else {
+          g.setColor(Color.RED);
+          sign = " ";
+       }
+      g.drawString(sign + change + PERSON_GLYPH, xpos - fontsize, ypos);
+   }
+
+   private void drawBoxes(Graphics2D graphics2D, PlayerStatChange change, int fontsize, int xpos, int ypos) {
+      if (change.getFundsChange() != 0) {
+         DrawFundsChange(graphics2D, change.getFundsChange(), xpos, ypos, fontsize);
+         ypos += fontsize * 2;
+      }
+      if (change.getIncomeChange() != 0) {
+         DrawIncomeChange(graphics2D, change.getIncomeChange(), xpos, ypos, fontsize);
+         ypos += fontsize * 2;
+      }
+      if (change.getPopulationChange() != 0) {
+         DrawPopulationChange(graphics2D, change.getPopulationChange(), xpos, ypos, fontsize);
+         ypos += fontsize * 2;
+      }
+      if (change.getReputationChange() != 0) {
+        DrawReputationChange(graphics2D, change.getReputationChange(), xpos, ypos, fontsize);
       }
    }
 
@@ -59,29 +126,74 @@ public class GenerateTiles {
       graphics2d.fillPolygon(polygon);
    }
 
+   private void drawInverseHexagon(Graphics2D graphics2d) {
+      // 4 triangles really...
+      int[] xpoints = new int[3];
+      int[] ypoints = new int[3];
+      Polygon polygon = new Polygon(xpoints, ypoints, 6);
+      graphics2d.fillPolygon(polygon);
+   }
+
    private void drawTitle(Graphics2D graphics2d, String title, int fontsize) {
       int ypos = 32 + fontsize;
       String[] parts = title.split(" ");
       for (String part : parts) {
          int namelen = part.length() * 3 * fontsize / 7;
-         graphics2d.drawString(part, xSize / 2 - namelen, ypos);
+         graphics2d.drawString(part, xSize / 2 - namelen - fontsize, ypos);
          ypos += 5 + fontsize;
       }
    }
 
-   private void drawCost(Graphics2D graphics2d, int cost, int fontsize) {
+   private void drawTag(Graphics2D graphics2d, Tile tile, Color color, Font font) {
+      graphics2d.setColor(color);
+      graphics2d.setFont(font);
+      int ypos = (int) (ySize / 2 + ySize * 0.05);
+      int xpos = (int) (xSize * 0.62);
+      if (tile.getTileTag() != TileTag.NONE) {
+         graphics2d.drawString(TagToGlyph(tile.getTileTag()), xpos, ypos);
+      }
+   }
+
+   private void drawAction(Graphics2D g, TileAction action, int xpos, int ypos, int fontsize) {
+      String message = "f";
+      if (action.match(TileEffectType.ANY, TileEffectTime.ONGOING, TileAreaEffect.ADJACENT)) {
+         message = "for every adjacent";
+      }
+      if (action.match(TileEffectType.ANY, TileEffectTime.ONGOING, TileAreaEffect.GAME_GLOBAL)) {
+         message = "for every";
+      }
+      if (action.match(TileEffectType.ANY, TileEffectTime.ONGOING, TileAreaEffect.PLAYER_GLOBAL)) {
+         message = "for every player";
+      }
+      if (action.match(TileEffectType.ANY, TileEffectTime.AFTER_NEW, TileAreaEffect.GAME_GLOBAL)) {
+         message = "for every new";
+      }
+      if (action.match(TileEffectType.ANY, TileEffectTime.AFTER_NEW, TileAreaEffect.PLAYER_GLOBAL)) {
+         message = "for every player new";
+      }
+      PlayerStatChange change = action.getChange();
+      drawBoxes(g, change, fontsize, xpos, ypos) ;
+      g.drawString(message, xpos + fontsize * 3, ypos);
+   }
+
+   private void drawCost(Graphics2D graphics2d, Tile tile, int fontsize, Font font) {
+       int cost = tile.getCost();
+       SlumColors color = tile.getColor();
       int ypos = ySize / 2 - (int) (ySize * 0.1);
       int xpos = (int) (xSize * 0.12);
       String s = "$" + cost;
       graphics2d.drawString(s, xpos, ypos);
+      // COLOR TAG
+      graphics2d.setFont(font);
+      ypos += (int) (fontsize * 1.4);
+      graphics2d.drawString(ColorToGlyph(color), xpos, ypos);
    }
 
    public void PaintImages() {
-      Color WHITE = new Color(255, 255, 255, 255);
-      Color CLEAR = new Color(0, 0, 0, 0);
-      int fontsize = 18;
+      int fontsize = 16;
       String fontname = "Bitstream Vera Serif";
       String outdir = "src/main/resources/images/";
+      Font helvetica = new Font("Helvetica", Font.PLAIN, fontsize + 4);
 
       System.out.println("Writing tile images.");
       Game game = new Game();
@@ -105,7 +217,28 @@ public class GenerateTiles {
             drawTitle(graphics2D, tile.getName().toUpperCase(), fontsize);
             font = new Font(fontname, Font.BOLD, fontsize + 5);
             graphics.setFont(font);
-            drawCost(graphics2D, tile.getCost(), fontsize);
+            // COST
+            drawCost(graphics2D, tile, fontsize, helvetica);
+            drawTag(graphics2D, tile, Color.WHITE , helvetica);
+
+            int ypos = ySize / 2 - (int) (ySize * 0.1);
+            int xpos = (int) (xSize * 0.62);
+
+            List<TileAction> actions = tile.getActions();
+            for (TileAction action: actions) {
+               if (action.match(TileEffectType.ANY, TileEffectTime.INSTANT, TileAreaEffect.ANY)) {
+                  drawBoxes(graphics2D, action.getChange(), fontsize, xpos, ypos);
+               }
+            }
+
+            ypos = ySize - ySize / 6;
+            xpos = xSize / 5;
+            for (TileAction action: actions) {
+               if (!action.match(TileEffectType.ANY, TileEffectTime.INSTANT, TileAreaEffect.ANY)) {
+                  drawAction(graphics2D, action, xpos, ypos, fontsize);
+                  ypos -= fontsize * 2.5;
+               }
+            }
 
             String outname = tile.getName().replace(" ", "_");
             File outputfile = new File(outdir + "Tile_" + series.toString()
@@ -126,5 +259,5 @@ public class GenerateTiles {
    }
 
    private int xSize = 256;
-   private int ySize = 256;
+   private int ySize = 221;  // sqrt(3)/2 [0.866] * xSize
 }
