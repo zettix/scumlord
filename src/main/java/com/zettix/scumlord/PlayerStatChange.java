@@ -45,19 +45,23 @@ public class PlayerStatChange {
         return fundsChange;
     }
 
-    public void setPopulationChange(int populationChange) {
+    public PlayerStatChange setPopulationChange(int populationChange) {
         this.populationChange = populationChange;
+        return this;
     }
 
-    public void setReputationChange(int reputationChange) {
+    public PlayerStatChange setReputationChange(int reputationChange) {
         this.reputationChange = reputationChange;
+        return this;
     }
 
-    public void setIncomeChange(int incomeChange) {
+    public PlayerStatChange setIncomeChange(int incomeChange) {
         this.incomeChange = incomeChange;
+        return this;
     }
 
-    public void setFundsChange(int fundsChange) {
+    public PlayerStatChange setFundsChange(int fundsChange) {
         this.fundsChange = fundsChange;
+        return this;
     }
 }

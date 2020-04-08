@@ -17,13 +17,13 @@ public class TileAction {
     }
 
     public boolean match(TileEffectType inType, TileEffectTime inTime, TileAreaEffect inArea) {
-        if ((inType != TileEffectType.ANY) || (inType != effectType)) {
+        if ((inType != TileEffectType.ANY) && (inType != effectType)) {
             return false;
         }
         if (inTime != effectTime) {
             return false;
         }
-        if ((inArea != TileAreaEffect.ANY) || (inArea != tileAreaEffect)) {
+        if ((inArea != TileAreaEffect.ANY) && (inArea != tileAreaEffect)) {
             return false;
         }
 
@@ -34,8 +34,16 @@ public class TileAction {
         this.colors = colors;
     }
 
+    public SortedSet<SlumColors> getFilterColors() {
+        return this.colors;
+    }
+
     public void setFilterTags(SortedSet<TileTag> tileTags) {
         this.tileTags = tileTags;
+    }
+
+    public SortedSet<TileTag> getFilterTags() {
+        return tileTags;
     }
 
     public PlayerStatChange getChange() {

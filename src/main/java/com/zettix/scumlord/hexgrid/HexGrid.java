@@ -40,7 +40,7 @@ public class HexGrid {
         Set<HexPosition> positions = new HashSet<>();
         Set<HexPosition> used = grid.keySet();
         for (HexPosition hexPosition : used) {
-            List<HexPosition> neighbors = hexPosition.getNeighbors();
+            Set<HexPosition> neighbors = hexPosition.getNeighbors();
             for (HexPosition h : neighbors) {
                 if (used.contains(h)) {
                     continue;

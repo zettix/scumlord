@@ -1,5 +1,6 @@
-package com.zettix.scumlord;
+package com.zettix.scumlord.tile;
 
+import com.zettix.scumlord.PlayerStatChange;
 import com.zettix.scumlord.tile.SlumColors;
 import com.zettix.scumlord.tile.Tile;
 import com.zettix.scumlord.tile.TileJsonReader;
