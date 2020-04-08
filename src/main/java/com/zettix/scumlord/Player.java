@@ -29,6 +29,11 @@ public class Player {
         score += change.getPopulationChange();
     }
 
+    public void applyStats() {
+        score += reputation;
+        funds += income;
+    }
+
     public void addTileToGlobals(HexPosition p) {
       globalPlayerTiles.add(p);
     }

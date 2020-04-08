@@ -7,9 +7,7 @@
       "color": "green",
       "actions": [
         {
-          "type": "any",
           "time": "instant",
-          "area": "any",
           "change": {
             "population": 2
           }
@@ -23,9 +21,7 @@
       "color": "yellow",
       "actions": [
         {
-          "type": "any",
           "time": "instant",
-          "area": "any",
           "change": {
             "income": 1
           }
@@ -51,9 +47,7 @@
       "color": "gray",
       "actions": [
         {
-          "type": "any",
           "time": "instant",
-          "area": "any",
           "change": {
             "income": -1
           }
@@ -81,9 +75,7 @@
       "color": "yellow",
       "actions": [
         {
-          "type": "any",
           "time": "instant",
-          "area": "any",
           "change": {
             "income": 1
           }
@@ -119,9 +111,7 @@
       "color": "blue",
       "actions": [
         {
-          "type": "any",
           "time": "instant",
-          "area": "any",
           "change": {
             "income": 1
           }
@@ -146,9 +136,7 @@
       "color": "blue",
       "actions": [
         {
-          "type": "any",
           "time": "instant",
-          "area": "any",
           "change": {
             "reputation": 1
           }
@@ -174,9 +162,7 @@
       "color": "gray",
       "actions": [
         {
-          "type": "any",
           "time": "instant",
-          "area": "any",
           "change": {
             "reputation": 1
           }
@@ -201,9 +187,7 @@
       "color": "gray",
       "actions": [
         {
-          "type": "any",
           "time": "instant",
-          "area": "any",
           "change": {
             "income": 2
           }
