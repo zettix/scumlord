@@ -27,11 +27,20 @@ public class HexPosition {
     private final int x;
     private final int y;
 
-    private static final int[] neighborMapX = {-1, 0, 1, 1, 0, -1};
-    private static final int[] neighborMapY = { 0, 1, 0,-1,-1, -1};
+    private static final int[] EVEN_NEIGHBOR_MAP_X = {-1, 0, 1, 1, 0, -1};
+    private static final int[] EVEN_NEIGHBOR_MAP_Y = { 0, 1, 0,-1,-1, -1};
+    private static final int[] ODD_NEIGHBOR_MAP_X = {-1, 0, 1, 1, 0, -1};
+    private static final int[] ODD_NEIGHBOR_MAP_Y = { 1, 1, 1, 0,-1, 0};
 
     public Set<HexPosition> getNeighbors() {
         Set<HexPosition> result = new HashSet<>();
+        int[] neighborMapX = EVEN_NEIGHBOR_MAP_X;
+        int[] neighborMapY = EVEN_NEIGHBOR_MAP_Y;
+        int xt = (x < 0) ? -x : x;
+        if (xt % 2 == 1) {
+            neighborMapX = ODD_NEIGHBOR_MAP_X;
+            neighborMapY = ODD_NEIGHBOR_MAP_Y;
+        }
         for (int i = 0; i < 6; i++) {
             int dx = neighborMapX[i] + x;
             int dy = neighborMapY[i] + y;

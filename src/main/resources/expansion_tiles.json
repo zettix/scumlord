@@ -1,0 +1,30 @@
+{
+  "tiles": [
+    {
+      "name": "Shipping Center",
+      "series": "A",
+      "cost": 15,
+      "color": "blue",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "game_global",
+          "colors": [
+            "blue"
+          ],
+          "change": {
+            "funds": 2
+          }
+        }
+      ],
+      "count": 1
+    }
+  ]
+}

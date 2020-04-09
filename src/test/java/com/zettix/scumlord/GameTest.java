@@ -71,12 +71,15 @@ public class GameTest {
         String[] tilesToAdd = {
                 "Domestic Airport",
                 "Boutique",
-                "Shipping Center",
+                "Gas Station",
                 "Elementary School",
                 "University"
         };
+
         Map<String, Tile> targetTiles = new HashMap<>();
-        for (Tile tile : game.getTilesBySeries(TileSeries.A)) {
+        for (String tileName : tilesToAdd) {
+            System.out.println("Finding:" + tileName);
+            Tile tile = game.getTileByName(tileName);
             for (String name : tilesToAdd) {
                 if (tile.getName().equals(name)) {
                     targetTiles.put(name, tile);
@@ -94,7 +97,7 @@ public class GameTest {
         int[] expectedScore = {2, 3, 4, 5, 7, 9};
         int[] expectedIncome = {0, 2, 3, 4, 4, 6};
         int[] expectedReputation = {1, 1, 1, 1, 2, 2};
-        int[] expectedFunds = {15, 17, 20, 26, 30, 36};
+        int[] expectedFunds = {15, 17, 20, 24, 28, 34};
         for (int idx = 0; idx < tilesToAdd.length; idx++) {
             System.out.println("idx:"+idx);
             assertEquals(player.getScore(), expectedScore[idx]);
@@ -122,12 +125,14 @@ public class GameTest {
         String[] tilesToAdd = {
                 "Domestic Airport",
                 "Boutique",
-                "Shipping Center",
+                "Gas Station",
                 "Elementary School",
                 "University"
         };
         Map<String, Tile> targetTiles = new HashMap<>();
-        for (Tile tile : game.getTilesBySeries(TileSeries.A)) {
+        for (String tileName : tilesToAdd) {
+            System.out.println("Finding:" + tileName);
+            Tile tile = game.getTileByName(tileName);
             for (String name : tilesToAdd) {
                 if (tile.getName().equals(name)) {
                     targetTiles.put(name, tile);
@@ -159,7 +164,7 @@ public class GameTest {
         //assertEquals(player.getIncome(), expectedIncome[tilesToAdd.length]);
         //assertEquals(player.getReputation(), expectedReputation[tilesToAdd.length]);
         RenderBoard renderBoard = new RenderBoard(player.getBoard(), game, 800, 800);
-        //renderBoard.Render("bar");
+        //renderBoard.Render("testAddAjectents");
     }
 
     private Game game;

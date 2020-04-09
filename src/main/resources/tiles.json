@@ -72,149 +72,7 @@
       "count": 1
     },
 
-    {
-      "name": "Domestic Airport",
-      "series": "A",
-      "tag": "airport",
-      "cost": 11,
-      "color": "yellow",
-      "actions": [
-        {
-          "time": "instant",
-          "change": {
-            "income": 1
-          }
-        },
-        {
-          "type": "color",
-          "time": "ongoing",
-          "area": "adjacent",
-          "change": {
-            "reputation": -1
-          },
-          "colors": [
-            "green"
-          ]
-        },
-        {
-          "type": "tag",
-          "time": "ongoing",
-          "area": "game_global",
-          "tags": [
-            "airport"
-          ],
-          "change": {
-            "income": 1
-          }
-        }
-      ],
-      "count": 1
-    },
-    {
-      "name": "Boutique",
-      "series": "A",
-      "cost": 9,
-      "color": "blue",
-      "actions": [
-        {
-          "time": "instant",
-          "change": {
-            "income": 1
-          }
-        },
-        {
-          "type": "color",
-          "time": "ongoing",
-          "area": "adjacent",
-          "colors": [
-            "green"
-          ],
-          "change": {
-            "reputation": 1
-          }
-        }
-      ],
-      "count": 1
-    },
-    {
-      "name": "Shipping Center",
-      "series": "A",
-      "cost": 15,
-      "color": "blue",
-      "actions": [
-        {
-          "time": "instant",
-          "change": {
-            "income": 1
-          }
-        },
-        {
-          "type": "color",
-          "time": "ongoing",
-          "area": "game_global",
-          "colors": [
-            "blue"
-          ],
-          "change": {
-            "funds": 2
-          }
-        }
-      ],
-      "count": 1
-    },
-    {
-      "name": "Elementary School",
-      "series": "A",
-      "tag": "school",
-      "cost": 5,
-      "color": "gray",
-      "actions": [
-        {
-          "time": "instant",
-          "change": {
-            "reputation": 1
-          }
-        },
-        {
-          "type": "color",
-          "time": "ongoing",
-          "area": "player_global",
-          "colors": [
-            "green"
-          ],
-          "change": {
-            "population": 1
-          }
-        }
-      ],
-      "count": 1
-    },
-    {
-      "name": "University",
-      "series": "A",
-      "cost": 15,
-      "color": "gray",
-      "actions": [
-        {
-          "time": "instant",
-          "change": {
-            "income": 2
-          }
-        },
-        {
-          "type": "tag",
-          "time": "ongoing",
-          "area": "player_global",
-          "tags": [
-            "school"
-          ],
-          "change": {
-            "reputation": 1
-          }
-        }
-      ],
-      "count": 1
-    },
+
     {
       "name": "Business Supply Store",
       "series": "A",
@@ -587,6 +445,779 @@
           "area": "player_global"
         }
 			],
+      "count": 2
+    },
+
+    {
+      "name": "Burg Von Alspach",
+      "series": "B",
+      "cost": 12,
+      "color": "green",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "population": 3
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "change": {
+            "reputation": 1
+          },
+          "colors": [
+            "green"
+					]
+        }
+     ],
+      "count": 2
+    },
+    {
+      "name": "Gas Station",
+      "series": "B",
+      "cost": 7,
+      "color": "blue",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "change": {
+            "population": 1
+          },
+          "colors": [
+            "green"
+          ]
+        }
+     ],
+      "count": 2
+    },
+
+    {
+      "name": "Casino",
+      "series": "B",
+      "cost": 22,
+      "color": "blue",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "reputation": -3
+          }
+        },
+        {
+          "type": "red_line",
+          "time": "ongoing",
+          "change": {
+            "income": 1
+          }
+        }
+     ],
+      "count": 2
+    },
+
+    {
+      "name": "Postal Service",
+      "series": "B",
+      "cost": 12,
+      "color": "gray",
+      "actions": [
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "player_global",
+          "change": {
+            "income": 1
+          },
+          "colors": [
+            "blue"
+					]
+        }
+     ],
+      "count": 2
+    },
+
+    {
+      "name": "Power Station",
+      "series": "B",
+      "cost": 11,
+      "color": "gray",
+      "actions": [
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "player_global",
+          "change": {
+            "income": 1
+          },
+          "colors": [
+            "yellow"
+					]
+        }
+     ],
+      "count": 2
+    },
+
+    {
+      "name": "Hostel",
+      "series": "B",
+      "cost": 0,
+      "color": "green",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "population": 2
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "change": {
+            "reputation": -1
+          },
+          "colors": [
+            "blue"
+					]
+        }
+     ],
+      "count": 2
+    },
+
+    {
+      "name": "Housing Projects",
+      "series": "B",
+      "cost": 8,
+      "color": "green",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "population": 10
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "change": {
+            "reputation": -2
+          },
+          "colors": [
+            "blue",
+            "green",
+            "gray"
+					]
+        }
+     ],
+      "count": 2
+    },
+
+    {
+      "name": "Retirement Village",
+      "series": "B",
+      "cost": 8,
+      "color": "green",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "population": 5
+          }
+        }
+     ],
+      "count": 2
+    },
+
+    {
+      "name": "Elementary School",
+      "series": "B",
+      "tag": "school",
+      "cost": 5,
+      "color": "gray",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "reputation": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "player_global",
+          "colors": [
+            "green"
+          ],
+          "change": {
+            "population": 1
+          }
+        }
+      ],
+      "count": 3
+    },
+
+    {
+      "name": "Museum",
+      "series": "B",
+      "cost": 8,
+      "color": "gray",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "reputation": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "colors": [
+            "gray"
+          ],
+          "change": {
+            "reputation": 1
+          }
+        }
+      ],
+      "count": 2
+    },
+
+    {
+      "name": "Office Of Bureaucracy",
+      "series": "B",
+      "tag": "office",
+      "cost": 9,
+      "color": "gray",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "reputation": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "player_global",
+          "colors": [
+            "gray"
+          ],
+          "change": {
+            "income": 1
+          }
+        }
+      ],
+      "count": 2
+    },
+
+    {
+      "name": "Movie Theater",
+      "series": "B",
+      "cost": 10,
+      "color": "blue",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "colors": [
+            "green"
+          ],
+          "change": {
+            "income": 1
+          }
+        }
+      ],
+      "count": 2
+     },
+
+    {
+      "name": "Skyscraper",
+      "series": "B",
+      "cost": 10,
+      "color": "blue",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": 3
+          }
+        },
+        {
+          "type": "tag",
+          "time": "after_new",
+          "area": "game_global",
+          "tags": [
+            "skyscraper"
+          ],
+          "change": {
+            "income": -1
+          }
+        }
+      ],
+      "count": 2
+     },
+    {
+      "name": "Domestic Airport",
+      "series": "B",
+      "tag": "airport",
+      "cost": 11,
+      "color": "yellow",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "change": {
+            "reputation": -1
+          },
+          "colors": [
+            "green"
+          ]
+        },
+        {
+          "type": "tag",
+          "time": "ongoing",
+          "area": "game_global",
+          "tags": [
+            "airport"
+          ],
+          "change": {
+            "income": 1
+          }
+        }
+      ],
+      "count": 3
+    },
+
+    {
+      "name": "Boutique",
+      "series": "C",
+      "cost": 9,
+      "color": "blue",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "colors": [
+            "green"
+          ],
+          "change": {
+            "reputation": 1
+          }
+        }
+      ],
+      "count": 2
+    },
+
+    {
+      "name": "University",
+      "series": "C",
+      "cost": 15,
+      "color": "gray",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": 2
+          }
+        },
+        {
+          "type": "tag",
+          "time": "ongoing",
+          "area": "player_global",
+          "tags": [
+            "school"
+          ],
+          "change": {
+            "reputation": 1
+          }
+        }
+      ],
+      "count": 2
+    },
+
+    {
+      "name": "Apartments",
+      "series": "C",
+      "cost": 12,
+      "color": "green",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "population": 5
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "colors": [
+            "blue"
+          ],
+          "change": {
+            "populaton": 2
+           }
+        }
+      ],
+      "count": 2
+    },
+
+    {
+      "name": "Condominium",
+      "series": "C",
+      "cost": 14,
+      "color": "green",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "population": 5
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "colors": [
+            "blue"
+          ],
+          "change": {
+            "populaton": 3
+           }
+        }
+      ],
+      "count": 2
+    },
+    {
+      "name": "Bed & Breakfast",
+      "series": "C",
+      "cost": 9,
+      "color": "green",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "population": 2
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "player_global",
+          "colors": [
+            "green"
+          ],
+          "change": {
+            "populaton": 1
+           }
+        }
+      ],
+      "count": 2
+    },
+
+    {
+      "name": "Middle School",
+      "series": "C",
+      "tag": "school",
+      "cost": 10,
+      "color": "gray",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "reputation": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "player_global",
+          "colors": [
+            "green"
+          ],
+          "change": {
+            "population": 2
+          }
+        }
+      ],
+      "count": 3
+    },
+    {
+      "name": "High School",
+      "series": "C",
+      "tag": "school",
+      "cost": 18,
+      "color": "gray",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "reputation": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "player_global",
+          "colors": [
+            "green"
+          ],
+          "change": {
+            "population": 3
+          }
+        }
+      ],
+      "count": 3
+    },
+    {
+      "name": "Local EPA Office",
+      "series": "C",
+      "tag": "office",
+      "cost": 12,
+      "color": "gray",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "reputation": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "game_global",
+          "colors": [
+            "yellow"
+          ],
+          "change": {
+            "funds": 2
+          }
+        }
+      ],
+      "count": 2
+    },
+    {
+      "name": "Hotel",
+      "series": "C",
+      "cost": 13,
+      "color": "blue",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "game_global_other",
+          "colors": [
+            "green"
+          ],
+          "change": {
+            "population": 1
+          }
+        }
+      ],
+      "count": 2
+    },
+    {
+      "name": "New Car Dealership",
+      "tag": "dealership",
+      "series": "C",
+      "cost": 12,
+      "color": "blue",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": 5
+          }
+        },
+        {
+          "type": "tag",
+          "time": "after_new",
+          "area": "game_global",
+          "tags": [
+            "dealership"
+          ],
+          "change": {
+            "income": -2
+          }
+        }
+      ],
+      "count": 2
+    },
+    {
+      "name": "Resort",
+      "series": "C",
+      "cost": 16,
+      "color": "blue",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "game_global",
+          "colors": [
+            "green"
+          ],
+          "change": {
+            "population": 1
+          }
+        }
+      ],
+      "count": 2
+    },
+
+    {
+      "name": "Recycling Plant",
+      "series": "C",
+      "cost": 17,
+      "color": "yellow",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "reputation": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "game_global",
+          "colors": [
+            "yellow"
+          ],
+          "change": {
+            "reputation": 2
+          }
+        }
+      ],
+      "count": 2
+    },
+
+    {
+      "name": "International Airport",
+      "tag": "airport",
+      "series": "C",
+      "cost": 18,
+      "color": "yellow",
+      "actions": [
+        {
+          "type": "tag",
+          "time": "ongoing",
+          "area": "game_global",
+          "tags": [
+            "airport"
+          ],
+          "change": {
+            "reputation": 1,
+            "income": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "colors": [
+            "green"
+          ],
+          "change": {
+            "reputation": -1
+          }
+        }
+      ],
+      "count": 2
+    },
+
+    {
+      "name": "Chip Fabri- cation Plant",
+      "series": "C",
+      "cost": 18,
+      "color": "yellow",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "reputation": 2
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "player_global",
+          "colors": [
+            "blue"
+          ],
+          "change": {
+            "income": 1
+          }
+        }
+      ],
+      "count": 2
+    },
+    {
+      "name": "PR Firm",
+      "series": "C",
+      "cost": 20,
+      "color": "blue",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": -2
+          }
+        },
+        {
+          "type": "red_line",
+          "time": "ongoing",
+          "colors": [
+            "green"
+          ],
+          "change": {
+            "reputation": 1
+          }
+        }
+      ],
       "count": 2
     }
   ]

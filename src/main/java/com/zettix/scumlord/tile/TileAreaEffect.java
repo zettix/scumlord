@@ -7,6 +7,7 @@ public enum TileAreaEffect {
     ANY,
     PLAYER_GLOBAL,
     GAME_GLOBAL,
+    GAME_GLOBAL_OTHER,
     ADJACENT;
 
     public static TileAreaEffect fromString(String inArea) {
