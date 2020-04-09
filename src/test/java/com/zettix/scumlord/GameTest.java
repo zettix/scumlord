@@ -109,7 +109,7 @@ public class GameTest {
         assertEquals(player.getReputation(), expectedReputation[tilesToAdd.length]);
         assertEquals(player.getFunds(), expectedFunds[tilesToAdd.length]);
         RenderBoard renderBoard = new RenderBoard(player.getBoard(), game, 200, 1000);
-        renderBoard.Render("foo");
+        //renderBoard.Render("foo");
     }
 
     @Test
@@ -159,7 +159,7 @@ public class GameTest {
         //assertEquals(player.getIncome(), expectedIncome[tilesToAdd.length]);
         //assertEquals(player.getReputation(), expectedReputation[tilesToAdd.length]);
         RenderBoard renderBoard = new RenderBoard(player.getBoard(), game, 800, 800);
-        renderBoard.Render("bar");
+        //renderBoard.Render("bar");
     }
 
     private Game game;
