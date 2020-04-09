@@ -94,19 +94,23 @@ public class TileJsonReader {
                     tileEffectType = TileEffectType.fromString(action.get("type").getAsString());
                 }
                 TileEffectTime tileEffectTime = TileEffectTime.fromString(action.get("time").getAsString());
-                PlayerStatChange change = new PlayerStatChange();
-                JsonObject jChange = action.get("change").getAsJsonObject();
-                if (jChange.has("reputation")) {
-                    change.setReputationChange(jChange.get("reputation").getAsInt());
-                }
-                if (jChange.has("income")) {
-                    change.setIncomeChange(jChange.get("income").getAsInt());
-                }
-                if (jChange.has("population")) {
-                    change.setPopulationChange(jChange.get("population").getAsInt());
-                }
-                if (jChange.has("funds")) {
-                    change.setFundsChange(jChange.get("funds").getAsInt());
+                //PlayerStatChange change = new PlayerStatChange();
+                PlayerStatChange change = null;
+                if (action.has("change")) {
+                    change = new PlayerStatChange();
+                    JsonObject jChange = action.get("change").getAsJsonObject();
+                    if (jChange.has("reputation")) {
+                        change.setReputationChange(jChange.get("reputation").getAsInt());
+                    }
+                    if (jChange.has("income")) {
+                        change.setIncomeChange(jChange.get("income").getAsInt());
+                    }
+                    if (jChange.has("population")) {
+                        change.setPopulationChange(jChange.get("population").getAsInt());
+                    }
+                    if (jChange.has("funds")) {
+                        change.setFundsChange(jChange.get("funds").getAsInt());
+                    }
                 }
                 TileAction tileAction = new TileAction(tileEffectType, tileEffectTime, tileAreaEffect, change);
                 switch(tileEffectType) {

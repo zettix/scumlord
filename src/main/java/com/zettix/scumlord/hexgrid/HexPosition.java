@@ -41,6 +41,27 @@ public class HexPosition {
         return result;
     }
 
+    public int[] toGrid() {
+        int xx = 0;
+        int yy = 0;
+        int xt = (x < 0) ? -x : x;
+        if (xt % 2 == 1) {
+            yy = 110;
+            //xx = -110;
+            System.err.println("Odd!!" + this.toString());
+        } else {
+            System.err.println("Even:" + this.toString());
+            System.err.println("xx:" + xx + "");
+        }
+        //xx += x * 221 * 3 / 4;
+        xx += x * 192;
+        yy += y * 221;
+        int[] result = new int[2];
+        result[0] = xx;
+        result[1] = yy;
+        return result;
+    };
+
     @Override
     public String toString() {
         return "{x:" + x + ",y:" + y + "}";

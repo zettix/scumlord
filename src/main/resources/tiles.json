@@ -12,7 +12,8 @@
             "population": 2
           }
         }
-      ]
+      ],
+      "count": 1
     },
     {
       "name": "Heavy Factory",
@@ -38,8 +39,10 @@
             "gray"
           ]
         }
-      ]
+      ],
+      "count": 1
     },
+
     {
       "name": "Community Park",
       "series": "Start",
@@ -65,8 +68,10 @@
             "yellow"
           ]
         }
-      ]
+      ],
+      "count": 1
     },
+
     {
       "name": "Domestic Airport",
       "series": "A",
@@ -102,7 +107,8 @@
             "income": 1
           }
         }
-      ]
+      ],
+      "count": 1
     },
     {
       "name": "Boutique",
@@ -127,7 +133,8 @@
             "reputation": 1
           }
         }
-      ]
+      ],
+      "count": 1
     },
     {
       "name": "Shipping Center",
@@ -152,7 +159,8 @@
             "funds": 2
           }
         }
-      ]
+      ],
+      "count": 1
     },
     {
       "name": "Elementary School",
@@ -178,7 +186,8 @@
             "population": 1
           }
         }
-      ]
+      ],
+      "count": 1
     },
     {
       "name": "University",
@@ -203,7 +212,382 @@
             "reputation": 1
           }
         }
-      ]
+      ],
+      "count": 1
+    },
+    {
+      "name": "Business Supply Store",
+      "series": "A",
+      "cost": 8,
+      "color": "blue",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": 1
+          }
+        },
+        {
+          "type": "tag",
+          "time": "ongoing",
+          "area": "game_global",
+          "change": {
+            "income": 1
+          },
+          "tags": [
+            "office"
+					]
+        }
+       ],
+      "count": 2
+    },
+    {
+      "name": "Fast Food Restaurant",
+      "series": "A",
+      "tag": "restaurant",
+      "cost": 7,
+      "color": "blue",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "change": {
+            "population": 1
+          },
+          "colors": [
+            "green"
+					]
+        }
+     ],
+     "count": 2
+    },
+    {
+      "name": "Mint",
+      "series": "A",
+      "cost": 15,
+      "color": "gray",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": 3
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "player_global",
+          "change": {
+            "funds": 2
+          },
+          "colors": [
+            "gray"
+					]
+        }
+     ],
+     "count": 2
+    },
+    {
+      "name": "Parking Lot",
+      "series": "A",
+      "cost": 12,
+      "color": "blue",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "change": {
+            "income": 1
+          },
+          "colors": [
+            "gray",
+            "blue"
+					]
+        }
+      ],
+      "count": 2
+    },
+    {
+      "name": "Convenience Store",
+      "series": "A",
+      "cost": 6,
+      "color": "blue",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": 1
+          }
+        }
+     ],
+     "count": 2
+    },
+    {
+      "name": "Freeway",
+      "series": "A",
+      "cost": 5,
+      "color": "yellow",
+      "actions": [
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "change": {
+            "reputation": -1
+          },
+          "colors": [
+            "green"
+					]
+       },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "change": {
+            "income": 1
+          },
+          "colors": [
+            "blue"
+					]
+       }
+     ],
+      "count": 2
+   },
+    {
+      "name": "Mobile Home Community",
+      "series": "A",
+      "cost": 4,
+      "color": "green",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "population": 6
+          }
+        }
+      ],
+      "count": 2
+    },
+    {
+      "name": "Slaughterhouse",
+      "series": "A",
+      "cost": 5,
+      "color": "yellow",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "reputation": -2
+          }
+        },
+        {
+          "type": "tag",
+          "time": "ongoing",
+          "area": "game_global",
+          "change": {
+            "income": 1
+          },
+          "tags": [
+            "restaurant"
+					]
+        }
+      ],
+      "count": 2
+    },
+    {
+      "name": "Fancy Restaurant",
+      "series": "A",
+      "cost": 9,
+      "tag": "restaurant",
+      "color": "blue",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": 3
+          }
+        },
+        {
+          "type": "tag",
+          "time": "after_new",
+          "area": "game_global",
+          "change": {
+            "income": -1
+          },
+          "tags": [
+            "restaurant"
+					]
+        }
+     ],
+     "count": 3
+    },
+    {
+      "name": "Landfill",
+      "series": "A",
+      "cost": 4,
+      "color": "yellow",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": 2
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "change": {
+            "reputation": -1
+          },
+          "colors": [
+            "green",
+            "blue",
+            "yellow",
+            "gray"
+					]
+        }
+     ],
+     "count": 2
+    },
+    {
+      "name": "Municipal Airport",
+      "series": "A",
+      "tag": "airport",
+      "cost": 6,
+      "color": "yellow",
+      "actions": [
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "change": {
+            "reputation": -1
+          },
+          "colors": [
+            "green"
+          ]
+        },
+        {
+          "type": "tag",
+          "time": "ongoing",
+          "area": "game_global",
+          "tags": [
+            "airport"
+					],
+          "change": {
+            "income": 1
+          }
+        }
+     ],
+     "count": 2
+    },
+    {
+      "name": "Farm",
+      "series": "A",
+      "cost": 9,
+      "color": "yellow",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "reputation": -1
+          }
+        },
+        {
+          "type": "tag",
+          "time": "ongoing",
+          "area": "game_global",
+          "change": {
+            "income": 1
+          },
+          "tags": [
+            "restaurant"
+					]
+        }
+     ],
+     "count": 2
+    },
+    {
+      "name": "Homeowner's Association",
+      "series": "A",
+      "cost": 6,
+      "color": "green",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "population": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "game_global",
+          "change": {
+            "funds": 2
+          },
+          "colors": [
+            "green"
+					]
+        }
+     ],
+     "count": 2
+    },
+    {
+      "name": "Office Building",
+      "series": "A",
+      "cost": 9,
+      "tag": "office",
+      "color": "blue",
+      "actions": [
+        {
+          "time": "instant",
+          "change": {
+            "income": 1
+          }
+        },
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "change": {
+            "funds": 1
+          },
+          "colors": [
+            "blue"
+					]
+        }
+     ],
+     "count": 3
+    },
+    {
+      "name": "Waterfront Realty",
+      "series": "A",
+      "cost": 6,
+      "color": "blue",
+      "actions": [
+        {
+          "type": "lake_double",
+          "time": "ongoing",
+          "area": "player_global"
+        }
+			],
+      "count": 2
     }
   ]
 }
