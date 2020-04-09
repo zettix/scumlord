@@ -17,12 +17,12 @@ public class HexPositionTest {
 
     @Before
     public void setUp() throws Exception {
-        hexPosition = new HexPosition(1, 2);
+        hexPosition = new HexPosition(0, 2);
     }
 
     @Test
     public void getX() {
-        assertEquals(hexPosition.getX(), 1);
+        assertEquals(hexPosition.getX(), 0);
     }
 
     @Test
@@ -34,30 +34,29 @@ public class HexPositionTest {
     public void getNeighbors() {
         Set<HexPosition> positions = hexPosition.getNeighbors();
         List<HexPosition> expected = new ArrayList<>();
-        expected.add(new HexPosition(0, 2));
-        expected.add(new HexPosition(1, 3));
-        expected.add(new HexPosition(2, 2));
-        expected.add(new HexPosition(2, 1));
+        expected.add(new HexPosition(-1, 2));
+        expected.add(new HexPosition(0, 3));
+        expected.add(new HexPosition(1, 2));
         expected.add(new HexPosition(1, 1));
+        expected.add(new HexPosition(0, 1));
         for (int i = 0; i < expected.size(); i++) {
             assertTrue(positions.contains(expected.get(i)));
-            assertFalse(positions.contains(new HexPosition(i, i + 3)));
         }
     }
 
     @Test
     public void toString1() {
-        assertEquals(hexPosition.toString(), "{x:1,y:2}");
+        assertEquals(hexPosition.toString(), "{x:0,y:2}");
     }
 
     @Test
     public void hashCode1() {
-        assertEquals(hexPosition.hashCode(), 1015);
+        assertEquals(hexPosition.hashCode(), 2);
     }
 
     @Test
     public void equals1() {
-        HexPosition hexPosition2 = new HexPosition(1, 2);
+        HexPosition hexPosition2 = new HexPosition(0, 2);
         assertEquals(hexPosition, hexPosition2);
 
         HexPosition hexPosition3 = new HexPosition(1, 1);

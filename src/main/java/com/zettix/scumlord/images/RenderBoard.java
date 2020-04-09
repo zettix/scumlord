@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
+import java.util.List;
 
 import static com.zettix.scumlord.images.ColorSwatch.CLEAR;
 import static com.zettix.scumlord.images.ColorSwatch.WHITE;
@@ -57,6 +58,23 @@ public class RenderBoard {
                 return;
             }
         }
+
+        List<HexPosition> openPositions = board.getOpenPositions();
+        File file = game.getOpenTile();
+        Image img;
+        try {
+            img = ImageIO.read(file);
+        } catch (IOException ex) {
+            System.err.println("Bad time:" + ex.getMessage());
+            return;
+        }
+        for (HexPosition hexPosition : openPositions) {
+            int[] xy = hexPosition.toGrid();
+            xy[1] = ySize - xy[1] - yoff;  // flip y
+            xy[0] = xSize / 2 + xy[0] - xoff / 2; // center
+            graphics2D.drawImage(img, xy[0], xy[1], null);
+        }
+
         try {
             File outputfile = new File(filename + ".png");
             ImageIO.write(image, "png", outputfile);

@@ -9,7 +9,9 @@ public enum TileTag {
     SCHOOL,
     RESTAURANT,
     OFFICE,
-    AIRPORT;
+    AIRPORT,
+    DEALERSHIP,
+    SKYSCRAPER;
 
     @Override
     public String toString() {
@@ -24,6 +26,10 @@ public enum TileTag {
                 return "Office";
             case AIRPORT:
                 return "Airport";
+            case DEALERSHIP:
+                return "Dealership";
+            case SKYSCRAPER:
+                return "Skyscraper";
             default:
                 return "Unknown TileTag:" + this;
         }

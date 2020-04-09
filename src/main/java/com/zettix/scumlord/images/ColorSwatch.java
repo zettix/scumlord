@@ -44,7 +44,7 @@ public class ColorSwatch {
         }
     }
 
-    public static String PERSON_GLYPH = "☺";
+    public static String PERSON_GLYPH = "☻";
     public static String DEAD_GLYPH = "☠";
     // alt: ♟, ⚑, ☠, ☺, ⛹
 

@@ -16,6 +16,7 @@ public class Game {
         seriesTiles = new HashMap<>();
         globalTilesWithEffects = new HashMap<>();
         tileImageMap = new HashMap<>();
+        tileNameMap = new HashMap<>();
     }
 
     public void Load() {
@@ -48,7 +49,29 @@ public class Game {
                 seriesTiles.put(series, tilesBySeries);
             }
             tilesBySeries.add(tile);
+            tileNameMap.put(tile.getName(), tile);
         }
+        File file;
+        String filename = outdir + "Tile_Open.png";
+        URL url = this.getClass().getClassLoader().getResource(filename);
+        try {
+            openTile = new File(url.toURI());
+
+        } catch (URISyntaxException ex) {
+            System.err.println("Could not find resource:" + ex.getMessage());
+            //return;
+        } catch (NullPointerException ex) {
+            System.err.println("Not that one...." +
+                    "" + ex.getMessage());
+        }
+
+    }
+
+    public Tile getTileByName(String name) {
+        if (tileNameMap.containsKey(name)) {
+            return tileNameMap.get(name);
+        }
+        return null;
     }
 
     public File getTileImageFile(Tile tile) {
@@ -56,6 +79,10 @@ public class Game {
             return tileImageMap.get(tile);
         }
         throw new IndexOutOfBoundsException("No such image file:" + tile.toString());
+    }
+
+    public File getOpenTile() {
+        return openTile;
     }
 
     public void AddPlayer(Player player) {
@@ -217,4 +244,6 @@ public class Game {
     private final Map<TileSeries, List<Tile>> seriesTiles;
     private final Map<Player, Set<HexPosition>> globalTilesWithEffects;
     private final Map<Tile, File> tileImageMap;
+    private final Map<String, Tile> tileNameMap;
+    private File openTile;
 }
