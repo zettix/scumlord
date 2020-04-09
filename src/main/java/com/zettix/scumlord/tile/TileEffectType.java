@@ -8,6 +8,7 @@ public enum TileEffectType {
     COLOR,
     NAME,
     TAG,
+    LAKE_DOUBLE,
     RED_LINE;
 
     public static TileEffectType fromString(String inType) {

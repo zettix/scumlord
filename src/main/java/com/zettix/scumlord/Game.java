@@ -5,6 +5,9 @@ import com.zettix.scumlord.hexgrid.HexGrid;
 import com.zettix.scumlord.hexgrid.HexPosition;
 import com.zettix.scumlord.tile.*;
 
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.*;
 
 public class Game {
@@ -12,6 +15,7 @@ public class Game {
         players = new TreeMap<>();
         seriesTiles = new HashMap<>();
         globalTilesWithEffects = new HashMap<>();
+        tileImageMap = new HashMap<>();
     }
 
     public void Load() {
@@ -19,8 +23,24 @@ public class Game {
         TileJsonReader reader = new TileJsonReader();
         List<Tile> tiles = reader.Load();
         List<Tile> tilesBySeries = null;
+        String outdir = "images/";
         for (Tile tile : tiles) {
             TileSeries series = tile.getSeries();
+            String outname = tile.getName().replace(" ", "_");
+            String filename = outdir + "Tile_" + series.toString() + "-" + outname + ".png";
+            URL url = this.getClass().getClassLoader().getResource(filename);
+            File file;
+            try {
+                file = new File(url.toURI());
+                tileImageMap.put(tile, file);
+            } catch (URISyntaxException ex) {
+                System.err.println("Could not find resource:" + ex.getMessage());
+                //return;
+            } catch (NullPointerException ex) {
+                System.err.println("Not that one...." +
+                        "" + ex.getMessage());
+            }
+
             if (seriesTiles.containsKey(series)) {
                 tilesBySeries = seriesTiles.get(series);
             } else {
@@ -29,6 +49,13 @@ public class Game {
             }
             tilesBySeries.add(tile);
         }
+    }
+
+    public File getTileImageFile(Tile tile) {
+        if (tileImageMap.containsKey(tile)) {
+            return tileImageMap.get(tile);
+        }
+        throw new IndexOutOfBoundsException("No such image file:" + tile.toString());
     }
 
     public void AddPlayer(Player player) {
@@ -189,4 +216,5 @@ public class Game {
     private final TreeMap<String, Player> players;
     private final Map<TileSeries, List<Tile>> seriesTiles;
     private final Map<Player, Set<HexPosition>> globalTilesWithEffects;
+    private final Map<Tile, File> tileImageMap;
 }
