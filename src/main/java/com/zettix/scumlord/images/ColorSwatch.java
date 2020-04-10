@@ -30,13 +30,13 @@ public class ColorSwatch {
     public static String ColorToGlyph(SlumColors inColor) {
         switch (inColor) {
             case GREEN:
-                return "☖";
+                return "🏠";
             case BLUE:
-                return "⛫";
+                return "🏢";
             case YELLOW:
-                return "⚒";
+                return "🏭";
             case GRAY:
-                return "⚖";
+                return "🏛️";
             case OCEAN:
                 return "";
             default:
@@ -44,20 +44,37 @@ public class ColorSwatch {
         }
     }
 
-    public static String PERSON_GLYPH = "☻";
+    public static String PERSON_GLYPH = "👤";
     public static String DEAD_GLYPH = "☠";
-    // alt: ♟, ⚑, ☠, ☺, ⛹
-
+    // alt: ♟, ⚑, ☠, ☺, ⛹, ⛄, ⛩ 💀
+    /*
+    public static String PERSON_GLYPH = "☻";
+                return "☖";🏠
+                return "☶";📘
+                return "⚒";🍔
+                return "☕";
+                return "🍸";👻🖉
+                return "✈";
+                return "⛫";🏙
+                return "☎";🖿
+https://en.wikipedia.org/wiki/Miscellaneous_Symbols_and_Pictographs
+     */
+    //https://en.wikipedia.org/wiki/Transport_and_Map_Symbols
+    //  ⛇https://en.wikipedia.org/wiki/Miscellaneous_Symbols
     public static String TagToGlyph(TileTag inTag) {
         switch (inTag) {
             case OFFICE:
-                return "☎";
+                return "🖿";
             case SCHOOL:
-                return "✎";
+                return "🖉";
             case RESTAURANT:
-                return "☕";
+                return "🍴";
             case AIRPORT:
-                return "✈";
+                return "🛪";
+            case DEALERSHIP:
+                return "🚗";
+            case SKYSCRAPER:
+                return "🏙";
             case NONE:
                 return "";
             default:

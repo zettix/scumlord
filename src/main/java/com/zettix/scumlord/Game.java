@@ -74,6 +74,10 @@ public class Game {
         return null;
     }
 
+    public Set<String> getTileNames() {
+        return tileNameMap.keySet();
+    }
+
     public File getTileImageFile(Tile tile) {
         if (tileImageMap.containsKey(tile)) {
             return tileImageMap.get(tile);

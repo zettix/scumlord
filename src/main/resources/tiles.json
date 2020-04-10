@@ -751,6 +751,7 @@
     {
       "name": "Skyscraper",
       "series": "B",
+      "tag": "skyscraper",
       "cost": 10,
       "color": "blue",
       "actions": [
