@@ -268,7 +268,8 @@ public class GenerateTiles {
             drawColors = true;
         }
         if (action.match(TileEffectType.COLOR, TileEffectTime.AFTER_NEW, TileAreaEffect.GAME_GLOBAL)) {
-            message = "for all " + actionColors(action) + " built after this one";
+            // message = "for all " + actionColors(action) + " built after this one";
+            message = "for all " + actionColors(action) + " built after";
             drawColors = true;
         }
         // Tags
@@ -289,7 +290,8 @@ public class GenerateTiles {
             drawTags = true;
         }
         if (action.match(TileEffectType.TAG, TileEffectTime.AFTER_NEW, TileAreaEffect.GAME_GLOBAL)) {
-            message = "for all " + actionTags(action) + " built after this one";
+            //message = "for all " + actionTags(action) + " built after this one";
+            message = "for all " + actionTags(action) + " built after";
             drawTags = true;
         }
 
@@ -513,7 +515,7 @@ public class GenerateTiles {
                 }
 
                 // Draw Actions
-                ypos = (int) (ySize * 0.8);
+                ypos = (int) (ySize * 0.77);
                 xpos =(int)  (xSize * 0.2);
                 if (numactions > 1) {
                     System.err.println("Tile:" + tile.toString() + " Has more than 1 action!");

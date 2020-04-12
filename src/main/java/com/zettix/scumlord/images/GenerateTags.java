@@ -71,8 +71,8 @@ public class GenerateTags {
          graphics2D.fillRect(0, 0, xSize, ySize);
          drawHexagon(graphics2D, 1.0, Color.BLACK);
          drawHexagon(graphics2D, .80, color);
-         int xpos = (int) (xSize * 0.20);
-         int ypos = (int) (ySize * 0.75);
+         int xpos = (int) (xSize * 0.24);
+         int ypos = (int) (ySize * 0.70);
           graphics2D.setColor(Color.WHITE);
          graphics2D.drawString(ColorToGlyph(slumColor),xpos, ypos);
          String outname = slumColor.toString();
@@ -91,7 +91,7 @@ public class GenerateTags {
       gen.PaintImages();
    }
 
-   private int xSize = 29;
-   private int ySize = 24;  // sqrt(3)/2 [0.866] * xSize
+   private int xSize = 40;
+   private int ySize = 35;  // sqrt(3)/2 [0.866] * xSize
     private Map<String, String> nameToUnicode;
 }
