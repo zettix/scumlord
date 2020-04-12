@@ -4,6 +4,7 @@ import com.zettix.scumlord.Game;
 import com.zettix.scumlord.tile.SlumColors;
 import com.zettix.scumlord.tile.Tile;
 import com.zettix.scumlord.tile.TileSeries;
+import com.zettix.scumlord.tile.TileTag;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -30,6 +31,7 @@ tags: school, restaurant, office, airport
 
 public class GenerateTags {
 
+
    private void drawHexagon(Graphics2D graphics2D, double percent, Color color) {
       graphics2D.setColor(color);
       int[] xpoints = new int[6];
@@ -49,18 +51,8 @@ public class GenerateTags {
 
    }
 
-   private String colorToDingbat(SlumColors color) {
-
-       switch (color) {
-           case GREEN:
-               return "";
-       }
-       return "nope";
-   }
-
-
   public void PaintImages() {
-      int fontsize = 15;
+      int fontsize = 13;
       String fontname = "Helvetica";
       String outdir = "src/main/resources/images/";
 
@@ -77,10 +69,10 @@ public class GenerateTags {
          graphics2D.setFont(font);
          graphics2D.setColor(CLEAR);
          graphics2D.fillRect(0, 0, xSize, ySize);
-         drawHexagon(graphics2D, 1.0, WHITE);
+         drawHexagon(graphics2D, 1.0, Color.BLACK);
          drawHexagon(graphics2D, .80, color);
-         int xpos = (int) (xSize * 0.16);
-         int ypos = (int) (ySize * 0.8);
+         int xpos = (int) (xSize * 0.20);
+         int ypos = (int) (ySize * 0.75);
           graphics2D.setColor(Color.WHITE);
          graphics2D.drawString(ColorToGlyph(slumColor),xpos, ypos);
          String outname = slumColor.toString();
@@ -99,7 +91,7 @@ public class GenerateTags {
       gen.PaintImages();
    }
 
-   private int xSize = 25;
-   private int ySize = 22;  // sqrt(3)/2 [0.866] * xSize
+   private int xSize = 29;
+   private int ySize = 24;  // sqrt(3)/2 [0.866] * xSize
     private Map<String, String> nameToUnicode;
 }

@@ -10,12 +10,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
 import java.util.List;
 
-import static com.zettix.scumlord.images.ColorSwatch.CLEAR;
 import static com.zettix.scumlord.images.ColorSwatch.WHITE;
 
 public class RenderBoard {
@@ -42,7 +38,7 @@ public class RenderBoard {
         graphics2D.fillRect(0, 0, xSize, ySize);
         graphics2D.setBackground(color);
         graphics2D.setColor(WHITE);
-        graphics2D.drawString("Hello!", 0, 0);
+        graphics2D.drawString("Hello!", 0, fontsize);
         for (HexPosition position : board.getLocations()) {
             Tile tile = board.getTile(position);
             File file = game.getTileImageFile(tile);

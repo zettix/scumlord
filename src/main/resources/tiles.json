@@ -515,7 +515,7 @@
         },
         {
           "type": "red_line",
-          "time": "ongoing",
+          "time": "after_new",
           "change": {
             "income": 1
           }
@@ -888,7 +888,7 @@
             "blue"
           ],
           "change": {
-            "populaton": 2
+            "population": 2
            }
         }
       ],
@@ -915,7 +915,7 @@
             "blue"
           ],
           "change": {
-            "populaton": 3
+            "population": 3
            }
         }
       ],
@@ -941,7 +941,7 @@
             "green"
           ],
           "change": {
-            "populaton": 1
+            "population": 1
            }
         }
       ],
@@ -1210,7 +1210,7 @@
         },
         {
           "type": "red_line",
-          "time": "ongoing",
+          "time": "after_new",
           "colors": [
             "green"
           ],
