@@ -1,8 +1,6 @@
 package com.zettix.scumlord.hexgrid;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class HexPosition {
@@ -50,19 +48,14 @@ public class HexPosition {
         return result;
     }
 
+    // Based on hexagons of dimension 192x221.
     public int[] toGrid() {
         int xx = 0;
         int yy = 0;
         int xt = (x < 0) ? -x : x;
         if (xt % 2 == 1) {
             yy = 110;
-            //xx = -110;
-            System.err.println("Odd!!" + this.toString());
-        } else {
-            System.err.println("Even:" + this.toString());
-            System.err.println("xx:" + xx + "");
         }
-        //xx += x * 221 * 3 / 4;
         xx += x * 192;
         yy += y * 221;
         int[] result = new int[2];
