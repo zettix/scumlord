@@ -81,6 +81,7 @@ public class TileJsonReader {
                 }
             }
             int cost  = jsonTile.get("cost").getAsInt();
+            int count = jsonTile.get("count").getAsInt();
             SlumColors color = SlumColors.fromString(jsonTile.get("color").getAsString());
             JsonArray actions = jsonTile.getAsJsonArray("actions");
             for (JsonElement k : actions) {
@@ -139,7 +140,8 @@ public class TileJsonReader {
                 }
                 tileActions.add(tileAction);
             }
-            Tile tile = new TileImpl().setName(name).setSeries(series).setColor(color).setCost(cost).setTileActions(tileActions);
+            Tile tile = new TileImpl().setName(name).setSeries(series).setColor(color).setCost(cost)
+                    .setTileActions(tileActions).setCount(count);
             if (tag != null) {
                 tile.setTileTag(tag);
             }

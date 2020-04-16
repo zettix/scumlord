@@ -17,6 +17,7 @@ public class Game {
         globalTilesWithEffects = new HashMap<>();
         tileImageMap = new HashMap<>();
         tileNameMap = new HashMap<>();
+        market = null;
     }
 
     public void Load() {
@@ -56,7 +57,6 @@ public class Game {
         URL url = this.getClass().getClassLoader().getResource(filename);
         try {
             openTile = new File(url.toURI());
-
         } catch (URISyntaxException ex) {
             System.err.println("Could not find resource:" + ex.getMessage());
             //return;
@@ -93,6 +93,23 @@ public class Game {
         players.put(player.getName(), player);
     }
 
+    private void AddGlobalTile(Player player, HexPosition position) {
+        Set<HexPosition> positions = null;
+        if (globalTilesWithEffects.containsKey(player)) {
+            positions = globalTilesWithEffects.get(player);
+        } else {
+            positions = new HashSet<>();
+        }
+        positions.add(position);
+        globalTilesWithEffects.put(player, positions);
+    }
+
+    public void Setup() {
+        // players added.  Set up initial player boards and market.
+        InitAllPlayerTiles();
+        market = new Market(players.size(), this);
+    }
+
 
     public Map<String, Integer> getStats() {
        Map<String, Integer> result = new HashMap<>();
@@ -108,47 +125,50 @@ public class Game {
        return result;
     }
 
+    private void filterByName(Tile t, String s, Map<String, Tile> map) {
+    }
+
     public void InitTiles(Player player) {
         // place suburb, community park, and heavy factory, one at a time, and change
         // player stats.
         List<Tile> startTiles = seriesTiles.get(TileSeries.START);
-        Tile suburb = null;
-        Tile heavyFactory = null;
-        Tile communityPark = null;
+        Map<String, Tile> myTiles  = new HashMap<>();
+        String[] placeMe = {"Suburbs", "Community Park", "Heavy Factory"};
         for (Tile t : startTiles) {
-            if (t.getName().equals("Suburbs")) {
-                suburb = t;
-            }
-            if (t.getName().equals("Heavy Factory")) {
-                heavyFactory = t;
-            }
-            if (t.getName().equals("Community Park")) {
-                communityPark = t;
+            for (String s : placeMe) {
+                if (t.getName().equals(s)) {
+                    myTiles.put(s, t);
+                }
             }
         }
-
-        if (suburb == null || heavyFactory == null || communityPark == null) {
+        if (myTiles.size() != 3) {
             throw new InternalError("Cannot find all starter tiles.");
         }
-
-        Tile[] placeMe = {suburb, communityPark, heavyFactory};
         HexPosition[] placePos = {
                 new HexPosition(0, 0),
                 new HexPosition(0, 1),
                 new HexPosition(0, 2),
         };
 
-        HexGrid board = player.getBoard();
         for (int idx = 0; idx < 3; idx++) {
-            Tile t = placeMe[idx];
+            Tile t = myTiles.get(placeMe[idx]);
             HexPosition hexPosition = placePos[idx];
             PlaceTile(player, t, hexPosition);
         }
     }
 
-    private void ApplyColorOrTagEffect(Player owningPlayer, Tile specialTile, Tile curiosTile) {
+    private void ApplyColorOrTagEffect(Player owningPlayer, Tile specialTile, Tile curiosTile, Player placingPlayer) {
+        // if placing, do for all existing tiles everywhere, then do 1by1.
+        // This is run for every global tile in game inventory.
         for (TileAction action : specialTile.getActions()) {
-            if (action.match(TileEffectType.COLOR, TileEffectTime.ONGOING, TileAreaEffect.ANY)) {
+            Boolean otherTag = action.match(TileEffectType.TAG, TileEffectTime.ONGOING, TileAreaEffect.GAME_GLOBAL_OTHER);
+            Boolean otherColor = action.match(TileEffectType.COLOR, TileEffectTime.ONGOING, TileAreaEffect.GAME_GLOBAL_OTHER);
+            Boolean anyTag = action.match(TileEffectType.TAG, TileEffectTime.ONGOING, TileAreaEffect.GAME_GLOBAL);
+            Boolean anyColor = action.match(TileEffectType.COLOR, TileEffectTime.ONGOING, TileAreaEffect.GAME_GLOBAL);
+            if (anyColor || otherColor) {
+                if (owningPlayer == placingPlayer && otherColor) {
+                    continue;
+                }
                 SortedSet<SlumColors> targetColors = action.getFilterColors();
                 SlumColors color = curiosTile.getColor();
                 if (targetColors.contains(color)) { // run that action...
@@ -156,7 +176,10 @@ public class Game {
                     owningPlayer.applyChange(change);
                 }
             }
-            if (action.match(TileEffectType.TAG, TileEffectTime.ONGOING, TileAreaEffect.ANY)) {
+            if (anyTag || otherTag) {
+                if (owningPlayer == placingPlayer && otherTag) {
+                    continue;
+                }
                 SortedSet<TileTag> targetTags = action.getFilterTags();
                 TileTag tileTag = curiosTile.getTileTag();
                 if (targetTags.contains(tileTag)) {
@@ -167,68 +190,57 @@ public class Game {
         }
     }
 
-    public void ApplyAdjacentChanges(Player player, HexPosition position, Tile tile) {
-        Set<HexPosition> effectTiles = player.getAdjacentEffectTile();
-        HexGrid board = player.getBoard();
-        for (HexPosition effectPosition: effectTiles) {
-            Set<HexPosition> sensitivePositions = effectPosition.getNeighbors();
-            if (sensitivePositions.contains(position)) {
-                // The tile's position overlaps a neighboring site of a tile with adjacent actions.
-                Tile effectTile = board.getTile(effectPosition);
-                ApplyColorOrTagEffect(player, effectTile, tile);
+    public void ApplyGlobalChanges(Tile tile, Player placingPlayer, HexPosition position) {
+        for (TileAction action : tile.getActions()) {
+            Boolean otherTag = action.match(TileEffectType.TAG, TileEffectTime.ONGOING, TileAreaEffect.GAME_GLOBAL_OTHER);
+            Boolean otherColor = action.match(TileEffectType.COLOR, TileEffectTime.ONGOING, TileAreaEffect.GAME_GLOBAL_OTHER);
+            Boolean anyTag = action.match(TileEffectType.TAG, TileEffectTime.ONGOING, TileAreaEffect.GAME_GLOBAL);
+            Boolean anyColor = action.match(TileEffectType.COLOR, TileEffectTime.ONGOING, TileAreaEffect.GAME_GLOBAL);
+            if (otherColor || anyColor || otherColor || anyTag) {
+               AddGlobalTile(placingPlayer, position);
+               // TODO: apply global change to all exisiting tiles.
             }
         }
-    }
-
-    public void ApplyGlobalChanges(Player player, HexPosition position, Tile tile) {
-        for (Player gobalPlayer : globalTilesWithEffects.keySet()) {
-            HexGrid board = player.getBoard();
-            Set<HexPosition> positions = globalTilesWithEffects.get(gobalPlayer);
+        for (Player globalPlayer : globalTilesWithEffects.keySet()) {
+            HexGrid board = globalPlayer.getBoard();
+            Set<HexPosition> positions = globalTilesWithEffects.get(globalPlayer);
             for (HexPosition ongoingPosition : positions) {
-                // Get effects for this ongoing position:
                 Tile specialTile = board.getTile(ongoingPosition);
-                ApplyColorOrTagEffect(gobalPlayer, specialTile, tile);
+                ApplyColorOrTagEffect(globalPlayer, specialTile, tile, placingPlayer);
             }
         }
     }
 
     public void PlaceTile(Player player, Tile tile, HexPosition position) {
         HexGrid board = player.getBoard();
-        // 1: place tile. 2: apply instants. 3: track ongoing. 4: apply ongoings.
-        board.setTile(tile, position);
-        //  2.
+        // 1: apply instants.
+        // 2 place tile.
+        //   2.1 Apply adjacents.
+        //   2.2 Apply player globals
+        //   2.3 Apply game globals
+        int linesCrossed = 0;
+        int oldScore = player.getScore();
         List<TileAction> actions = tile.getActions();
         for (TileAction action : actions) {
             if (action.match(TileEffectType.ANY, TileEffectTime.INSTANT, TileAreaEffect.ANY)) {
                 // apply instant action.
                 PlayerStatChange change = action.getChange();
+                oldScore = player.getScore();
                 player.applyChange(change);
-            } else {
-                // store ongoing actions.
-                if (action.match(TileEffectType.ANY, TileEffectTime.ONGOING, TileAreaEffect.ANY)) {
-                    if (action.match(TileEffectType.ANY, TileEffectTime.ONGOING, TileAreaEffect.PLAYER_GLOBAL)) {
-                        player.addTileToGlobals(position);
-                    }
-                    if (action.match(TileEffectType.ANY, TileEffectTime.ONGOING, TileAreaEffect.ADJACENT)) {
-                        player.addTileToAdjacents(position);
-                    }
-                    if (action.match(TileEffectType.ANY, TileEffectTime.ONGOING, TileAreaEffect.GAME_GLOBAL)) {
-                        Set<HexPosition> hexPositions = null;
-                        if (globalTilesWithEffects.containsKey(player)) {
-                            hexPositions = globalTilesWithEffects.get(player);
-                        } else {
-                            hexPositions = new HashSet<>();
-                            globalTilesWithEffects.put(player, hexPositions);
-                        }
-                        hexPositions.add(position);
-                    }
-                }
+                int newScore = player.getScore();
+                //linesCrossed = getLinesCrossed(oldScore, newScore);
+                oldScore = newScore;
             }
         }
-        // apply any pending actions.
-        ApplyGlobalChanges(player, position, tile);
-        // have player apply any pending actions.
-        ApplyAdjacentChanges(player, position, tile);
+        // Player is in charge of : Player Adjacentsand Player globals.
+        PlayerStatChange change = player.addTile(tile, position);
+        player.applyChange(change);
+        int newScore = player.getScore();
+        //linesCrossed = getLinesCrossed(oldScore, newScore);
+        newScore = oldScore;
+        ApplyGlobalChanges(tile, player, position);
+        newScore = player.getScore();
+        //linesCrossed = getLinesCrossed(oldScore, newScore);
     }
 
     public List<Tile> getTilesBySeries(TileSeries series) {
@@ -250,4 +262,5 @@ public class Game {
     private final Map<Tile, File> tileImageMap;
     private final Map<String, Tile> tileNameMap;
     private File openTile;
+    private Market market;
 }

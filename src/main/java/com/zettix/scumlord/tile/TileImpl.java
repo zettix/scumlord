@@ -13,9 +13,8 @@ public class TileImpl implements Tile {
         cost = 0;
         color = SlumColors.GREEN;
         tileTag = TileTag.NONE;
-
+        count = 0;
         // Requirements and effects
-
         actions = new ArrayList<>();
         requirement = null;
     }
@@ -38,6 +37,10 @@ public class TileImpl implements Tile {
 
     public Tile setCost(int val) {
         this.cost = val;
+        return this;
+    }
+    public Tile setCount(int val) {
+        this.count = val;
         return this;
     }
     public Tile setColor(SlumColors color) {
@@ -69,6 +72,7 @@ public class TileImpl implements Tile {
     public TileTag getTileTag() {return tileTag;}
     public List<TileAction> getActions() { return actions; }
     public TileAction getRequirement() { return requirement; }
+    public int getCount() { return count; }
 
 
     @Override
@@ -102,6 +106,7 @@ public class TileImpl implements Tile {
     private TileSeries series;
     private String text;
     private int cost;
+    private int count;
     private SlumColors color;
     private TileTag tileTag;
     List<TileAction> actions;

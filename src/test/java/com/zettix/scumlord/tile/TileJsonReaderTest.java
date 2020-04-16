@@ -20,7 +20,7 @@ public class TileJsonReaderTest {
         InputStream is = classloader.getResourceAsStream("test_tiles.json");
         reader.setInputStream(is);
         List<Tile> tiles = reader.Load();
-        assertEquals(tiles.size(), 8);
+        assertEquals(tiles.size(), 47);
 
         Tile tile = tiles.get(0);
         PlayerStatChange res = tile.getActions().get(0).getChange();
@@ -32,16 +32,16 @@ public class TileJsonReaderTest {
                 "Suburbs [$: 3 ][c: Green]<<[p:2]>>",
                 "Heavy Factory [$: 3 ][c: Yellow]<<[i:1]>>< when Green Gray  is adjacent <[r:-1]>>",
                 "Community Park [$: 4 ][c: Gray]<<[i:-1]>>< when Green Yellow Blue  is adjacent <[r:1]>>",
-                "Domestic Airport [$: 11 ][c: Yellow ][t: Airport]<<[i:1]>>< when Green  is adjacent <[r:-1]>>< when Airport  of all tiles <[i:1]>>",
-                "Boutique [$: 9 ][c: Blue]<<[i:1]>>< when Green  is adjacent <[r:1]>>",
-                "Shipping Center [$: 15 ][c: Blue]<<[r:1]>>< when Blue  of all tiles <[$:2]>>",
-                "Elementary School [$: 5 ][c: Gray ][t: School]<<[r:1]>>< when Green  of player tiles <[p:1]>>",
-                "University [$: 15 ][c: Gray]<<[i:2]>>< when School  of player tiles <[r:1]>>"
+                "Business Supply Store [$: 8 ][c: Blue]<<[i:1]>>< when Office  of all tiles <[i:1]>>",
+                "Fast Food Restaurant [$: 7 ][c: Blue ][t: Restaurant]<<[i:1]>>< when Green  is adjacent <[p:1]>>",
+                "Mint [$: 15 ][c: Gray]<<[i:3]>>< when Gray  of player tiles <[$:2]>>",
+                "Parking Lot [$: 12 ][c: Blue]<<[i:1]>>< when Gray Blue  is adjacent <[i:1]>>",
+                "Convenience Store [$: 6 ][c: Blue]<<[i:1]>>"
         };
         for (int i = 0; i < expecteds.length; i++) {
             Tile testTile = tiles.get(i);
             String expected = expecteds[i];
-            assertEquals(testTile.toString(), expected);
+            assertEquals(expected, testTile.toString());
         }
     }
 }

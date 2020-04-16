@@ -14,6 +14,7 @@ public interface Tile extends Serializable {
     Tile setTileTag(TileTag tag);       // The tag: Office, Restaurant, Airport, etc.
     Tile setTileActions(List<TileAction> actions);  // Anything the tile does.
     Tile setRequirement(TileAction requriement);  // Requirements to place tile.
+    Tile setCount(int count);  // Count of tile in game. Required.
 
     // Getters
     String getName();
@@ -24,4 +25,5 @@ public interface Tile extends Serializable {
     TileTag getTileTag();
     List<TileAction> getActions();
     TileAction getRequirement();
+    int getCount();
 }
