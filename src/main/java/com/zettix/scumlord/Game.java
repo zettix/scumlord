@@ -39,8 +39,7 @@ public class Game {
                 System.err.println("Could not find resource:" + ex.getMessage());
                 //return;
             } catch (NullPointerException ex) {
-                System.err.println("Not that one...." +
-                        "" + ex.getMessage());
+                System.err.println("Not that one...." + ex.getMessage());
             }
 
             if (seriesTiles.containsKey(series)) {
@@ -61,8 +60,7 @@ public class Game {
             System.err.println("Could not find resource:" + ex.getMessage());
             //return;
         } catch (NullPointerException ex) {
-            System.err.println("Not that one...." +
-                    "" + ex.getMessage());
+            System.err.println("Not that one...." + ex.getMessage());
         }
 
     }
@@ -125,8 +123,6 @@ public class Game {
        return result;
     }
 
-    private void filterByName(Tile t, String s, Map<String, Tile> map) {
-    }
 
     public void InitTiles(Player player) {
         // place suburb, community park, and heavy factory, one at a time, and change
@@ -166,6 +162,7 @@ public class Game {
             Boolean anyTag = action.match(TileEffectType.TAG, TileEffectTime.ONGOING, TileAreaEffect.GAME_GLOBAL);
             Boolean anyColor = action.match(TileEffectType.COLOR, TileEffectTime.ONGOING, TileAreaEffect.GAME_GLOBAL);
             if (anyColor || otherColor) {
+                System.err.println("Global Tile " + specialTile + " and " + curiosTile + " share Global Color Effect maybe...");
                 if (owningPlayer == placingPlayer && otherColor) {
                     continue;
                 }
@@ -173,10 +170,12 @@ public class Game {
                 SlumColors color = curiosTile.getColor();
                 if (targetColors.contains(color)) { // run that action...
                     PlayerStatChange change = action.getChange();
+                    System.err.println("Applying global change " + change);
                     owningPlayer.applyChange(change);
                 }
             }
             if (anyTag || otherTag) {
+                System.err.println("Global Tile " + specialTile.getName() + " and " + curiosTile.getName() + " share Global Tag Effect maybe...");
                 if (owningPlayer == placingPlayer && otherTag) {
                     continue;
                 }
@@ -184,6 +183,7 @@ public class Game {
                 TileTag tileTag = curiosTile.getTileTag();
                 if (targetTags.contains(tileTag)) {
                     PlayerStatChange change = action.getChange();
+                    System.err.println("Applying global change " + change);
                     owningPlayer.applyChange(change);
                 }
             }
@@ -196,9 +196,19 @@ public class Game {
             Boolean otherColor = action.match(TileEffectType.COLOR, TileEffectTime.ONGOING, TileAreaEffect.GAME_GLOBAL_OTHER);
             Boolean anyTag = action.match(TileEffectType.TAG, TileEffectTime.ONGOING, TileAreaEffect.GAME_GLOBAL);
             Boolean anyColor = action.match(TileEffectType.COLOR, TileEffectTime.ONGOING, TileAreaEffect.GAME_GLOBAL);
-            if (otherColor || anyColor || otherColor || anyTag) {
+            if (otherColor || anyColor || otherTag || anyTag) {
+                System.err.println("Adding " + tile.getName() + " to Globals");
                AddGlobalTile(placingPlayer, position);
-               // TODO: apply global change to all exisiting tiles.
+               for (Player aPlayer : players.values()) {
+                   HexGrid board = aPlayer.getBoard();
+                   for (HexPosition aPosition : board.getLocations()) {
+                       if (placingPlayer == aPlayer && position == aPosition) {
+                           continue;  // will be covered later in next for loop.
+                       }
+                       Tile aTile = board.getTile(aPosition);
+                       ApplyColorOrTagEffect(placingPlayer, tile, aTile, aPlayer);
+                   }
+               }
             }
         }
         for (Player globalPlayer : globalTilesWithEffects.keySet()) {
