@@ -137,7 +137,7 @@ public class Player {
                 }
             }
             if (byColorAdjacent || byTagAdjacent) {
-                System.err.println("New Tile has adjacent effects.");
+                System.err.println("New Tile " + t.getName() + " has adjacent effects.");
                 addTileToAdjacents(p);
                 Set<HexPosition> positions = p.getNeighbors();
                 for (HexPosition neighborPosition : positions) {
@@ -147,7 +147,7 @@ public class Player {
                             SlumColors color = neighbor.getColor();
                             if (action.getFilterColors().contains(color)) { // activated!
                                 System.err.println("Existing Adjacent Tile Color Activation between:"
-                                        + t.toString() + " and " + neighbor.toString());
+                                        + t.getName() + " and " + neighbor.getName() + ":" + action.toString());
                                 change.addChange(action.getChange());
                             }
                         }
@@ -155,7 +155,7 @@ public class Player {
                             TileTag tag = neighbor.getTileTag();
                             if (action.getFilterTags().contains(tag)) { // activated!
                                 System.err.println("Existing Adjacent Tile Tag Activation between:"
-                                        + t.toString() + " and " + neighbor.toString());
+                                        + t.getName() + " and " + neighbor.getName() + ":" + action.toString());
                                 change.addChange(action.getChange());
                             }
                         }
@@ -168,14 +168,17 @@ public class Player {
         // Adjacent tiles:
         Set<Tile> hotTiles = getAdjacents(p);
         for (Tile hotTile : hotTiles) {
+            System.err.println("          Checking adjacency " + hotTile.getName() + " and " + t.getName());
             for (TileAction action : hotTile.getActions()) {
                 if (action.match(TileEffectType.COLOR, TileEffectTime.ONGOING, TileAreaEffect.ADJACENT)) {
                     if (action.getFilterColors().contains(t.getColor())) { // serious match here folks...
+                        System.err.println("             adding " + action.getChange().toString());
                         change.addChange(action.getChange());
                     }
                 }
                 if (action.match(TileEffectType.TAG, TileEffectTime.ONGOING, TileAreaEffect.ADJACENT)) {
                     if (action.getFilterTags().contains(t.getTileTag())) { // serious match here folks...
+                        System.err.println("             adding " + action.getChange().toString());
                         change.addChange(action.getChange());
                     }
                 }

@@ -15,6 +15,27 @@ import static org.junit.Assert.*;
 
 public class GameTest {
 
+    /**
+     * Helper to populate map of string tile names to tiles objects.
+     *
+     * @param tilesToAdd Array of tile names
+     * @return map of [tile name]->[tile object]
+     */
+    private Map<String, Tile> findTiles(String[] tilesToAdd) {
+        Map<String, Tile> targetTiles = new HashMap<>();
+        for (String tileName : tilesToAdd) {
+            System.out.println("Finding:" + tileName);
+            Tile tile = game.getTileByName(tileName);
+            for (String name : tilesToAdd) {
+                if (tile.getName().equals(name)) {
+                    targetTiles.put(name, tile);
+                }
+            }
+        }
+        return targetTiles;
+    }
+
+
     @Before
     public void startUp() {
         game = new Game();
@@ -78,16 +99,7 @@ public class GameTest {
                 "University"
         };
 
-        Map<String, Tile> targetTiles = new HashMap<>();
-        for (String tileName : tilesToAdd) {
-            System.out.println("Finding:" + tileName);
-            Tile tile = game.getTileByName(tileName);
-            for (String name : tilesToAdd) {
-                if (tile.getName().equals(name)) {
-                    targetTiles.put(name, tile);
-                }
-            }
-        }
+        Map<String, Tile> targetTiles = findTiles(tilesToAdd);
 
         HexPosition[] positionsToAdd = {
                 new HexPosition(0, 3),
@@ -131,16 +143,7 @@ public class GameTest {
                 "Elementary School",
                 "University"
         };
-        Map<String, Tile> targetTiles = new HashMap<>();
-        for (String tileName : tilesToAdd) {
-            System.out.println("Finding:" + tileName);
-            Tile tile = game.getTileByName(tileName);
-            for (String name : tilesToAdd) {
-                if (tile.getName().equals(name)) {
-                    targetTiles.put(name, tile);
-                }
-            }
-        }
+        Map<String, Tile> targetTiles = findTiles(tilesToAdd);
 
         HexPosition[] positionsToAdd = {
                 new HexPosition(1, 2),
@@ -152,7 +155,7 @@ public class GameTest {
         int[] expectedReputation = { 1,  1,  2,  3,  4,  5};
         int[] expectedScore      = { 2,  3,  5,  8,  13,  18};
         int[] expectedIncome     = { 0,  2,  3,  4,  4,  6};
-        int[] expectedFunds      = {15, 17, 20, 24, 28, 36};
+        int[] expectedFunds      = {15, 17, 20, 24, 28, 34};
         //////////////////////////// X.air,bou,gas,ele,
         for (int idx = 0; idx < tilesToAdd.length; idx++) {
             System.out.println("idx:"+idx);
@@ -169,8 +172,48 @@ public class GameTest {
         assertEquals(player.getScore(), expectedScore[tilesToAdd.length]);
         assertEquals(player.getIncome(), expectedIncome[tilesToAdd.length]);
         assertEquals(player.getReputation(), expectedReputation[tilesToAdd.length]);
-        //RenderBoard renderBoard = new RenderBoard(player.getBoard(), game, 800, 800);
-        //renderBoard.Render("testAddAjectents");
+        assertEquals(player.getFunds(), expectedFunds[tilesToAdd.length]);
+    }
+
+    @Test
+    public void testAirportStrategy() {
+        game.Load();
+        PlayerStatChange change = new PlayerStatChange().setFundsChange(15);
+        Player player = new Player("Test Player", change);
+        game.AddPlayer(player);
+        game.Setup();
+        String[] tilesToAdd = {
+                "Domestic Airport",
+                "Municipal Airport",
+                "International Airport",
+        };
+        Map<String, Tile> targetTiles = findTiles(tilesToAdd);
+        HexPosition[] positionsToAdd = {
+                new HexPosition(1, 2),
+                new HexPosition(-1, 1),
+                new HexPosition(1, 1),
+        };
+        int[] expectedReputation = { 1,  1,  2,  6};
+        int[] expectedScore      = { 2,  3,  5,  11};
+        int[] expectedIncome     = { 0,  2,  5,  10};
+        int[] expectedFunds      = {15, 17, 22, 32};
+        //////////////////////////// X.air,bou,gas,ele,
+        for (int idx = 0; idx < tilesToAdd.length; idx++) {
+            System.out.println("idx:"+idx);
+            assertEquals(player.getIncome(), expectedIncome[idx]);
+            assertEquals(player.getReputation(), expectedReputation[idx]);
+            assertEquals(player.getFunds(), expectedFunds[idx]);
+            assertEquals(player.getScore(), expectedScore[idx]);
+            System.err.println("Placing Tile:" + targetTiles.get((tilesToAdd[idx])));
+            game.PlaceTile(player, targetTiles.get(tilesToAdd[idx]), positionsToAdd[idx]);
+            player.applyStats();
+            //RenderBoard renderBoard = new RenderBoard(player.getBoard(), game, 800, 800);
+            //renderBoard.Render("testAirportStrategy" + idx);
+        }
+        assertEquals(player.getScore(), expectedScore[tilesToAdd.length]);
+        assertEquals(player.getIncome(), expectedIncome[tilesToAdd.length]);
+        assertEquals(player.getReputation(), expectedReputation[tilesToAdd.length]);
+        assertEquals(player.getFunds(), expectedFunds[tilesToAdd.length]);
     }
 
     private Game game;
