@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 public class RenderBoardTest {
 
-    //@Test
+    @Test
     public void render() {
         Game g = new Game();
         HexGrid board = new HexGrid();
@@ -46,6 +46,6 @@ public class RenderBoardTest {
             idx++;
         }
         RenderBoard renderBoard = new RenderBoard(board, g, 1800, 1800);
-        renderBoard.Render("AllTiles");
+        //renderBoard.Render("AllTiles");
     }
 }

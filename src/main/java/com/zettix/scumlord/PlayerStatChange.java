@@ -45,6 +45,14 @@ public class PlayerStatChange {
         return fundsChange;
     }
 
+    public PlayerStatChange addChange(PlayerStatChange change) {
+        fundsChange += change.fundsChange;
+        incomeChange += change.incomeChange;
+        reputationChange += change.reputationChange;
+        populationChange += change.populationChange;
+        return this;
+    }
+
     public PlayerStatChange setPopulationChange(int populationChange) {
         this.populationChange = populationChange;
         return this;
