@@ -115,6 +115,9 @@ public class Market {
             if (tileSeries ==  TileSeries.START) {
                 continue;
             }
+            if (tileSeries ==  TileSeries.INTERNAL) {
+                continue;
+            }
             List<Tile> gameTiles = game.getTilesBySeries(tileSeries);
             List<Tile> myTiles = new ArrayList<>();
             for (Tile t : gameTiles) {
