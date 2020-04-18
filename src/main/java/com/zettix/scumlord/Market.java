@@ -10,20 +10,23 @@ public class Market {
     private Map<Tile, Integer> startTileCount;
     private final int playerCount;
     private final Game game;
-    private final int MARKET_SIZE = 8;
+    private final int MARKET_SIZE = 7;
     private List<Tile> counterTop;
+    private final boolean doShuffle;
 
     private Market() {
         playerCount = 0;
         game = null;
+        doShuffle = false;
     }
 
-    public Market(int playerCount, Game game) {
+    public Market(int playerCount, Game game, boolean doShuffle) {
         this.game = game;
         this.playerCount = playerCount;
         market = new HashMap<>();
         counterTop = new ArrayList<>();
         startTileCount = new HashMap<>();
+        this.doShuffle = doShuffle;
     }
 
     private void LoadCounterBySeries(TileSeries series) {
@@ -48,7 +51,9 @@ public class Market {
 
     public void Setup() {
         Load();
-        Shuffle();
+        if (doShuffle) {
+            Shuffle();
+        }
         TruncateTiles();
         LoadCounterTop();
     }
@@ -99,9 +104,9 @@ public class Market {
         playerToStarterTileCount.put(4, 6);
 
         List<Tile> startTiles = game.getTilesBySeries(TileSeries.START);
-        List<Tile> myStartTiles = new ArrayList<>();
+        //List<Tile> myStartTiles = new ArrayList<>();
         for (Tile t: startTiles) {
-            myStartTiles.add(t);
+            //myStartTiles.add(t);
             startTileCount.put(t, playerToStarterTileCount.get(playerCount));
         }
 

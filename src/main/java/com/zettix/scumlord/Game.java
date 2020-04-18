@@ -18,6 +18,12 @@ public class Game {
         tileImageMap = new HashMap<>();
         tileNameMap = new HashMap<>();
         market = null;
+        Integer[] redArray = {15, 22, 29, 35, 41, 47, 53, 59, 64, 69, 74, 78, 82, 86,
+                89, 92, 95, 98, 101, 103, 105, 107, 109, 111, 113, 114, 117, 119,
+                121, 123, 125, 127, 129, 131, 133, 135, 137, 139, 141, 143, 145,
+                147, 149};
+        redLines = Arrays.asList(redArray);
+        doShuffule = true;
     }
 
     public void Load() {
@@ -105,7 +111,8 @@ public class Game {
     public void Setup() {
         // players added.  Set up initial player boards and market.
         InitAllPlayerTiles();
-        market = new Market(players.size(), this);
+        market = new Market(players.size(), this, doShuffule);
+        market.Setup();
     }
 
 
@@ -253,6 +260,42 @@ public class Game {
         //linesCrossed = getLinesCrossed(oldScore, newScore);
     }
 
+    public Tile buyTile(Player player, String selection) {
+        // TODO(sean): flesh out purchase mechanism.
+                String[] startTiles = {"Suburbs",
+                "Heavy Factory",
+                "Community Park"};
+        Tile t = null;
+        for (String startName : startTiles) {
+            if (selection.equals(startName)) {
+                t = market.BuyStarterTile(getTileByName(startName));
+                PlayerStatChange change = new PlayerStatChange().setFundsChange(t.getCost());
+                player.applyChange(change);
+                break;
+            }
+        }
+        if (t == null) {
+            String tileNumberString = selection.substring(selection.indexOf(':'));
+            int tileNumber = Integer.parseInt(tileNumberString);
+            int tax = 0;
+            if (tileNumber > 2) {
+                tax = 2 * (tileNumber - 2);
+            }
+            if (selection.startsWith("Lake:")) {
+                PlayerStatChange change = new PlayerStatChange().setFundsChange(tax);
+                player.applyChange(change);
+                market.BuyTile(tileNumber); // destroy, drop on the ground, ignore return.
+                t = getTileByName("Lake");
+            } else if (selection.startsWith("Tile:")) {
+                PlayerStatChange change = new PlayerStatChange().setFundsChange(t.getCost() + tax);
+                player.applyChange(change);
+                t = market.BuyTile(tileNumber);
+            }
+        }
+        return t;
+    }
+
+
     public List<Tile> getTilesBySeries(TileSeries series) {
         if (seriesTiles.containsKey(series)) {
             return seriesTiles.get(series);
@@ -273,4 +316,6 @@ public class Game {
     private final Map<String, Tile> tileNameMap;
     private File openTile;
     private Market market;
+    private final List<Integer> redLines;
+    public boolean doShuffule;  // for testing.
 }

@@ -2,6 +2,8 @@ package com.zettix.scumlord;
 
 import com.zettix.scumlord.tile.Tile;
 import com.zettix.scumlord.tile.TileSeries;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;
@@ -11,12 +13,20 @@ import static org.junit.Assert.*;
 
 public class MarketTest {
 
+    private Game game;
+    private Market market;
+
+
+    @Before
+    public void Setup() {
+        game = new Game();
+        game.Load();
+        market = new Market(2, game, false);
+        market.Setup();
+    }
+
     @Test
     public void testBuyStarter() {
-        Game game = new Game();
-        game.Load();
-        Market market = new Market(2, game);
-        market.Setup();
         Tile suburbs = game.getTileByName("Suburbs");
         assertNotNull("Find Suburbs tile:", suburbs);
         int availableSuburbs = market.getStartTileCounts().get(suburbs);
@@ -30,10 +40,6 @@ public class MarketTest {
 
     @Test
     public void testStartTileCounts() {
-        Game game = new Game();
-        game.Load();
-        Market market = new Market(2, game);
-        market.Setup();
         Tile tile = game.getTileByName("Suburbs");
         Map<TileSeries, Integer> stackCounts = market.getSeriesTileCounts();
         int available = market.getStartTileCounts().get(tile);
@@ -50,32 +56,24 @@ public class MarketTest {
 
     @Test
     public void testCounterTileCounts() {
-        Game game = new Game();
-        game.Load();
-        Market market = new Market(2, game);
-        market.Setup();
-        Integer[] expected = {6, 12, 14};
+        Integer[] expected = {7, 12, 14};
         TileSeries[] testSeries = {TileSeries.A, TileSeries.B, TileSeries.C};
         Map<TileSeries, Integer> seriesCounts = market.getSeriesTileCounts();
         for (int i  = 0; i < expected.length; i++) {
             assertEquals(expected[i], seriesCounts.get(testSeries[i]));
         }
-        assertEquals(8, market.getCounterTop().size());
+        assertEquals(7, market.getCounterTop().size());
     }
 
 
     @Test
     public void testBuyTiles() {
-        Game game = new Game();
-        game.Load();
-        Market market = new Market(2, game);
-        market.Setup();
         List<Tile> oldCounter = market.getCounterTop();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 7; i++) {
             Tile t = market.BuyTile(3);
-            assertEquals(8, market.getCounterTop().size());
+            assertEquals(7, market.getCounterTop().size());
             int seriesAlen = market.getSeriesTileCounts().get(TileSeries.A);
-            assertEquals(5 - i, seriesAlen);
+            assertEquals(6 - i, seriesAlen);
         }
         // All A tiles are out.
         Map<TileSeries, Integer> stats = market.getSeriesTileCounts();
@@ -88,14 +86,14 @@ public class MarketTest {
         // Buy up 6 B tiles.
         for (int i = 0; i < 6; i++) {
             Tile t = market.BuyTile(3);
-            assertEquals(8, market.getCounterTop().size());
+            assertEquals(7, market.getCounterTop().size());
             int seriesBlen = market.getSeriesTileCounts().get(TileSeries.B);
             assertEquals(11 - i, seriesBlen);
         }
         // Buy up 12 more tiles.
         for (int i = 0; i < 12; i++) {
             Tile t = market.BuyTile(3);
-            assertEquals(8, market.getCounterTop().size());
+            assertEquals(7, market.getCounterTop().size());
         }
         stats = market.getSeriesTileCounts();
         seriesLen = stats.get(TileSeries.A);
@@ -104,6 +102,23 @@ public class MarketTest {
         assertEquals(0, seriesLen);
         seriesLen = stats.get(TileSeries.C);
         assertEquals(8, seriesLen);
+    }
+
+    @Test
+    public void NonShuffleTileTest() {
+        String[] expected_layout =  {
+                "Business Supply Store",
+                "Business Supply Store",
+                "Fast Food Restaurant",
+                "Fast Food Restaurant",
+                "Mint",
+                "Mint",
+                "Parking Lot",
+        };
+        List<Tile> counterTop = market.getCounterTop();
+        for (int i = 0; i < expected_layout.length; i++) {
+            assertEquals(expected_layout[i], counterTop.get(i).getName());
+        }
     }
 
 }
