@@ -5,7 +5,6 @@ import com.zettix.scumlord.PlayerStatChange;
 import com.zettix.scumlord.tile.*;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -442,6 +441,54 @@ public class GenerateTiles {
         }
     }
 
+    public void GenerateLakeTile() {
+        BufferedImage image = new BufferedImage(xSize, ySize, BufferedImage.TYPE_INT_ARGB);
+        Graphics graphics = image.getGraphics();
+        graphics2D = (Graphics2D) graphics;
+        clear();
+        //graphics2D.setColor(new Color(22, 19, 200));
+        SortedSet<SlumColors> colorset = new TreeSet<>();
+        colorset.add(SlumColors.GREEN);
+        colorset.add(SlumColors.BLUE);
+        colorset.add(SlumColors.YELLOW);
+        colorset.add(SlumColors.GRAY);
+        List<TileAction> actionList = new ArrayList<>();
+        PlayerStatChange change = new PlayerStatChange().setFundsChange(2);
+        TileAction tileAction = new TileAction(TileEffectType.COLOR, TileEffectTime.ONGOING, TileAreaEffect.ADJACENT, change);
+        tileAction.setFilterColors(colorset);
+        actionList.add(tileAction);
+        Tile tile = new TileImpl().setName("Lake").setColor(SlumColors.OCEAN).setTileActions(actionList);
+        clear();
+        Color color = getColor(tile.getColor());
+
+        Font titleFont = new Font("Helvetica", Font.BOLD, fontsize - 2);
+        Font tagFont = new Font("Helvetica", Font.PLAIN, fontsize + 14);
+        drawTitle(color , tile, titleFont);
+        Font costFont = new Font("Helvetica", Font.BOLD, fontsize + 4);
+        // Draw Cost
+        drawCost(tile, costFont, tagFont);
+
+        // Draw Actions
+        int ypos = (int) (ySize * 0.77);
+        int xpos =(int)  (xSize * 0.2);
+        for (TileAction action: tile.getActions()) {
+            if (!action.match(TileEffectType.ANY, TileEffectTime.INSTANT, TileAreaEffect.ANY)) {
+                drawSingleAction(action, xpos, ypos, 1);
+                ypos -= fontsize * 2.5;
+            }
+        }
+
+        // Write image
+        String outname = "Lake";
+        String outdir = "src/main/resources/images/";
+        File outputfile = new File(outdir + "Tile_" + outname + ".png");
+        try {
+            ImageIO.write(image, "png", outputfile);
+        } catch (IOException e) {
+            System.err.println("Could not write file!" + e.getMessage());
+        }
+    }
+
     public void GenerateOpenSpotTile() {
         BufferedImage image = new BufferedImage(xSize, ySize, BufferedImage.TYPE_INT_ARGB);
         Graphics graphics = image.getGraphics();
@@ -545,6 +592,7 @@ public class GenerateTiles {
         GenerateTiles generateTiles = new GenerateTiles();
         generateTiles.PaintImages();
         generateTiles.GenerateOpenSpotTile();
+        generateTiles.GenerateLakeTile();
     }
 
     private int xSize = 256;
