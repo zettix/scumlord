@@ -39,11 +39,16 @@ public class GameTest {
     @Before
     public void startUp() {
         game = new Game();
+        game.doShuffule = false;
+        game.Load();
+        PlayerStatChange change = new PlayerStatChange().setFundsChange(15);
+        player = new Player("Test Player", change);
+        game.AddPlayer(player);
     }
 
     @Test
     public void load() {
-        game.Load();
+        game.Setup();
         Map<String, Integer> resultmap = game.getStats();
         int startSize = resultmap.get(TileSeries.START.toString());
         assertEquals(startSize, 3);
@@ -51,11 +56,7 @@ public class GameTest {
 
     @Test
     public void initTiles() {
-        game.Load();
-        PlayerStatChange change = new PlayerStatChange().setFundsChange(15);
-        Player player = new Player("Test Player", change);
-        game.AddPlayer(player);
-        game.InitTiles(player);
+        game.Setup();
         assertEquals(player.getFunds(), 15);
         assertEquals(player.getIncome(), 0);
         assertEquals(player.getReputation(), 1);
@@ -66,14 +67,11 @@ public class GameTest {
 
     @Test
     public void initAllPlayerTiles() {
-        game.Load();
         PlayerStatChange change = new PlayerStatChange().setFundsChange(15);
-        Player player = new Player("Test Player", change);
-        game.AddPlayer(player);
         Player player2 = new Player("Test Player the Second", change);
         game.AddPlayer(player2);
 
-        game.InitAllPlayerTiles();
+        game.Setup();
         assertEquals(player.getFunds(), 15);
         assertEquals(player.getIncome(), 0);
         assertEquals(player.getReputation(), 1);
@@ -86,11 +84,7 @@ public class GameTest {
 
     @Test
     public void testAddFive() {
-        game.Load();
-        PlayerStatChange change = new PlayerStatChange().setFundsChange(15);
-        Player player = new Player("Test Player", change);
-        game.AddPlayer(player);
-        game.InitAllPlayerTiles();
+        game.Setup();
         String[] tilesToAdd = {
                 "Domestic Airport",
                 "Boutique",
@@ -131,10 +125,6 @@ public class GameTest {
 
     @Test
     public void testAddAdjacents() {
-        game.Load();
-        PlayerStatChange change = new PlayerStatChange().setFundsChange(15);
-        Player player = new Player("Test Player", change);
-        game.AddPlayer(player);
         game.Setup();
         String[] tilesToAdd = {
                 "Domestic Airport",
@@ -177,7 +167,6 @@ public class GameTest {
 
     @Test
     public void testAirportStrategy() {
-        game.Load();
         PlayerStatChange change = new PlayerStatChange().setFundsChange(15);
         Player player = new Player("Test Player", change);
         game.AddPlayer(player);
@@ -216,5 +205,18 @@ public class GameTest {
         assertEquals(player.getFunds(), expectedFunds[tilesToAdd.length]);
     }
 
+    @Test
+    public void testBuyTile() {
+        game.Setup();
+        String[] testTiles = {"Suburbs",
+                "Heavy Factory",
+                "Community Park"};
+        for (String tileName : testTiles) {
+            Tile t = game.buyTile(player, tileName);
+            assertEquals(tileName, t.getName());
+        }
+    }
+
     private Game game;
+    private Player player;
 }
