@@ -18,7 +18,7 @@ public class ColorSwatch {
          case GRAY:
             return new Color(128, 128, 128, 255);
          case OCEAN:
-            return new Color(0, 0, 128, 255);
+            return new Color(50, 120, 228, 255);
          default:
             return new Color(0, 255, 255, 255);
       }
