@@ -1,6 +1,29 @@
 {
   "tiles": [
     {
+      "name": "Lake",
+      "series": "Internal",
+      "cost": 0,
+      "color": "ocean",
+      "actions": [
+        {
+          "type": "color",
+          "time": "ongoing",
+          "area": "adjacent",
+          "change": {
+            "funds": 2
+          },
+          "colors": [
+            "green",
+            "gray",
+            "blue",
+            "yellow"
+          ]
+        }
+      ],
+      "count": 1
+    },
+    {
       "name": "Suburbs",
       "series": "Start",
       "cost": 3,

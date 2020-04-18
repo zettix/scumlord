@@ -5,6 +5,7 @@ import java.util.Map;
 
 public enum TileSeries {
     START,
+    INTERNAL,
     A,
     B,
     C;
