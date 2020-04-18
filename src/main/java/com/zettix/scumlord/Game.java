@@ -131,7 +131,7 @@ public class Game {
     }
 
 
-    public void InitTiles(Player player) {
+    private void InitTiles(Player player) {
         // place suburb, community park, and heavy factory, one at a time, and change
         // player stats.
         List<Tile> startTiles = seriesTiles.get(TileSeries.START);
@@ -315,6 +315,7 @@ public class Game {
     private final Map<Tile, File> tileImageMap;
     private final Map<String, Tile> tileNameMap;
     private File openTile;
+    private File lakeTile;
     private Market market;
     private final List<Integer> redLines;
     public boolean doShuffule;  // for testing.
