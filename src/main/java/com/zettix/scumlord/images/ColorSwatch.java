@@ -1,7 +1,7 @@
 package com.zettix.scumlord.images;
 
-import com.zettix.scumlord.tile.SlumColors;
-import com.zettix.scumlord.tile.TileTag;
+import com.zettix.scumlord.tile.enums.SlumColors;
+import com.zettix.scumlord.tile.enums.TileTag;
 
 import java.awt.*;
 

@@ -2,6 +2,7 @@ package com.zettix.scumlord;
 
 import com.zettix.scumlord.hexgrid.HexPosition;
 import com.zettix.scumlord.tile.*;
+import com.zettix.scumlord.tile.enums.*;
 import org.junit.Before;
 import org.junit.Test;
 

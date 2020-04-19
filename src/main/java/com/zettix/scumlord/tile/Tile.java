@@ -1,5 +1,10 @@
 package com.zettix.scumlord.tile;
 
+import com.zettix.scumlord.tile.enums.SlumColors;
+import com.zettix.scumlord.tile.enums.TileAction;
+import com.zettix.scumlord.tile.enums.TileSeries;
+import com.zettix.scumlord.tile.enums.TileTag;
+
 import java.io.Serializable;
 import java.util.List;
 

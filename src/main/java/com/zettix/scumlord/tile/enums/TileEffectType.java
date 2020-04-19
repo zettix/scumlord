@@ -1,4 +1,4 @@
-package com.zettix.scumlord.tile;
+package com.zettix.scumlord.tile.enums;
 
 import java.util.HashMap;
 import java.util.Map;

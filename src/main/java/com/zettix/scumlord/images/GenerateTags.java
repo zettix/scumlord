@@ -1,17 +1,13 @@
 package com.zettix.scumlord.images;
 
 import com.zettix.scumlord.Game;
-import com.zettix.scumlord.tile.SlumColors;
-import com.zettix.scumlord.tile.Tile;
-import com.zettix.scumlord.tile.TileSeries;
-import com.zettix.scumlord.tile.TileTag;
+import com.zettix.scumlord.tile.enums.SlumColors;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import static com.zettix.scumlord.images.ColorSwatch.*;

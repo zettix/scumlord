@@ -3,6 +3,7 @@ package com.zettix.scumlord.images;
 import com.zettix.scumlord.Game;
 import com.zettix.scumlord.PlayerStatChange;
 import com.zettix.scumlord.tile.*;
+import com.zettix.scumlord.tile.enums.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
