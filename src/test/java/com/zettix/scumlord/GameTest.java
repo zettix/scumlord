@@ -1,6 +1,5 @@
 package com.zettix.scumlord;
 
-import com.zettix.scumlord.hexgrid.HexGrid;
 import com.zettix.scumlord.hexgrid.HexPosition;
 import com.zettix.scumlord.images.RenderBoard;
 import com.zettix.scumlord.tile.Tile;
@@ -113,8 +112,7 @@ public class GameTest {
             assertEquals(player.getReputation(), expectedReputation[idx]);
             assertEquals(player.getFunds(), expectedFunds[idx]);
             game.PlaceTile(player, targetTiles.get(tilesToAdd[idx]), positionsToAdd[idx]);
-            player.applyStats();
-            //RenderBoard renderBoard = new RenderBoard(player.getBoard(), game, 240, 2000);
+            //RenderBoard renderBoard = new RenderBoard(player, game, 240, 2000);
             //renderBoard.Render("testAdd5-idx:" + idx);
         }
         assertEquals(player.getScore(), expectedScore[tilesToAdd.length]);
@@ -155,8 +153,7 @@ public class GameTest {
             assertEquals(player.getScore(), expectedScore[idx]);
             System.err.println("Placing Tile:" + targetTiles.get((tilesToAdd[idx])));
             game.PlaceTile(player, targetTiles.get(tilesToAdd[idx]), positionsToAdd[idx]);
-            player.applyStats();
-            //RenderBoard renderBoard = new RenderBoard(player.getBoard(), game, 800, 800);
+            //RenderBoard renderBoard = new RenderBoard(player, game, 800, 800);
             //renderBoard.Render("testAddAjectents" + idx);
         }
         assertEquals(player.getScore(), expectedScore[tilesToAdd.length]);
@@ -186,7 +183,6 @@ public class GameTest {
         int[] expectedScore      = { 2,  3,  5,  11};
         int[] expectedIncome     = { 0,  2,  5,  10};
         int[] expectedFunds      = {15, 17, 22, 32};
-        //////////////////////////// X.air,bou,gas,ele,
         for (int idx = 0; idx < tilesToAdd.length; idx++) {
             System.out.println("idx:"+idx);
             assertEquals(player.getIncome(), expectedIncome[idx]);
@@ -195,7 +191,6 @@ public class GameTest {
             assertEquals(player.getScore(), expectedScore[idx]);
             System.err.println("Placing Tile:" + targetTiles.get((tilesToAdd[idx])));
             game.PlaceTile(player, targetTiles.get(tilesToAdd[idx]), positionsToAdd[idx]);
-            player.applyStats();
             //RenderBoard renderBoard = new RenderBoard(player.getBoard(), game, 800, 800);
             //renderBoard.Render("testAirportStrategy" + idx);
         }
@@ -212,7 +207,7 @@ public class GameTest {
                 "Heavy Factory",
                 "Community Park"};
         for (String tileName : testTiles) {
-            Tile t = game.buyTile(player, tileName);
+            Tile t = game.buyTile(player, tileName + ":0");
             assertEquals(tileName, t.getName());
         }
     }

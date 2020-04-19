@@ -129,7 +129,7 @@ public class Market {
         }
     }
 
-    public Tile BuyStarterTile(Tile t) {
+    public Tile BuyStarterTile(Tile t, int removal) {
         Tile aStarterTile = null;
         for (Tile starterTile : startTileCount.keySet()) {
             if (t == starterTile) {
@@ -140,6 +140,8 @@ public class Market {
                 break;
             }
         }
+        counterTop.remove(removal);
+        LoadCounterTop();
         return aStarterTile;
     }
 
