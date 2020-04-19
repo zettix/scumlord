@@ -7,6 +7,7 @@ import java.util.TreeSet;
 import java.util.logging.Logger;
 
 import com.zettix.scumlord.PlayerStatChange;
+import com.zettix.scumlord.tile.enums.*;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

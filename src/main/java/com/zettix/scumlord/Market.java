@@ -1,7 +1,7 @@
 package com.zettix.scumlord;
 
 import com.zettix.scumlord.tile.Tile;
-import com.zettix.scumlord.tile.TileSeries;
+import com.zettix.scumlord.tile.enums.TileSeries;
 
 import java.util.*;
 

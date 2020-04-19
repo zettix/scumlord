@@ -4,6 +4,7 @@ package com.zettix.scumlord;
 import com.zettix.scumlord.hexgrid.HexGrid;
 import com.zettix.scumlord.hexgrid.HexPosition;
 import com.zettix.scumlord.tile.*;
+import com.zettix.scumlord.tile.enums.*;
 
 import java.io.File;
 import java.net.URISyntaxException;

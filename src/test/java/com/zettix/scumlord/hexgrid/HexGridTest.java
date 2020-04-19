@@ -3,13 +3,9 @@ package com.zettix.scumlord.hexgrid;
 import com.zettix.scumlord.Game;
 import com.zettix.scumlord.Player;
 import com.zettix.scumlord.PlayerStatChange;
-import com.zettix.scumlord.hexgrid.HexGrid;
-import com.zettix.scumlord.hexgrid.HexPosition;
 import com.zettix.scumlord.images.RenderBoard;
-import com.zettix.scumlord.tile.SlumColors;
 import com.zettix.scumlord.tile.Tile;
-import com.zettix.scumlord.tile.TileImpl;
-import com.zettix.scumlord.tile.TileSeries;
+import com.zettix.scumlord.tile.enums.TileSeries;
 import org.junit.Before;
 import org.junit.Test;
 

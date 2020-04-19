@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.zettix.scumlord.PlayerStatChange;
+import com.zettix.scumlord.tile.enums.*;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;

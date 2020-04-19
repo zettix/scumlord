@@ -1,4 +1,4 @@
-package com.zettix.scumlord.tile;
+package com.zettix.scumlord.tile.enums;
 
 import com.zettix.scumlord.PlayerStatChange;
 

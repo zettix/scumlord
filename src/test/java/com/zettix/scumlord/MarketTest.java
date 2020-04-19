@@ -1,9 +1,8 @@
 package com.zettix.scumlord;
 
 import com.zettix.scumlord.tile.Tile;
-import com.zettix.scumlord.tile.TileSeries;
+import com.zettix.scumlord.tile.enums.TileSeries;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;

@@ -1,15 +1,10 @@
 package com.zettix.scumlord.images;
 
-import com.zettix.scumlord.Game;
-import com.zettix.scumlord.tile.SlumColors;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-import static com.zettix.scumlord.images.ColorSwatch.*;
 
 public class FontSwatch {
 
