@@ -1,6 +1,8 @@
 package com.zettix.scumlord.hexgrid;
 
 import com.zettix.scumlord.Game;
+import com.zettix.scumlord.Player;
+import com.zettix.scumlord.PlayerStatChange;
 import com.zettix.scumlord.hexgrid.HexGrid;
 import com.zettix.scumlord.hexgrid.HexPosition;
 import com.zettix.scumlord.images.RenderBoard;
@@ -19,6 +21,8 @@ public class HexGridTest {
 
     Game game;
     Tile suburb;
+    Player player;
+    HexGrid grid;
 
 
     @Before
@@ -33,16 +37,19 @@ public class HexGridTest {
                 break;
             }
         }
+        player = new Player("test player", new PlayerStatChange());
+        grid = player.getBoard();
     }
 
     @Test
     public void getSimpleEvenPositions() {
-        HexGrid grid = new HexGrid();
+        Player player = new Player("test player", new PlayerStatChange());
+        HexGrid grid = player.getBoard();
         HexPosition hexPosition = new HexPosition(0, 1);
         grid.setTile(suburb, hexPosition);
         List<HexPosition> openPositions = grid.getOpenPositions();
         assertEquals(openPositions.size(), 6);  // a naked tile.
-        RenderBoard renderBoard = new RenderBoard(grid, game, 1000, 1000);
+        RenderBoard renderBoard = new RenderBoard(player, game, 1000, 1000);
         // renderBoard.Render("getSimpleEvenPositions");
     }
 
@@ -52,7 +59,7 @@ public class HexGridTest {
         grid.setTile(suburb, hexPosition);
         List<HexPosition> openPositions = grid.getOpenPositions();
         assertEquals(openPositions.size(), 6);  // a naked tile.
-        RenderBoard renderBoard = new RenderBoard(grid, game, 1000, 1000);
+        RenderBoard renderBoard = new RenderBoard(player, game, 1000, 1000);
         // renderBoard.Render("getSimpleOddPositions");
     }
 
@@ -72,7 +79,7 @@ public class HexGridTest {
         openPositions = grid.getOpenPositions();
         assertEquals(openPositions.size(), 9);
 
-        RenderBoard renderBoard = new RenderBoard(grid, game, 1000, 1000);
+        RenderBoard renderBoard = new RenderBoard(player, game, 1000, 1000);
         // renderBoard.Render("getOpenPositions");
     }
 

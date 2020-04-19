@@ -158,6 +158,10 @@ public class Game {
             HexPosition hexPosition = placePos[idx];
             PlaceTile(player, t, hexPosition);
         }
+        // Now adjust for changes.  Placing Suburb (score +2), Community Park(income -1, rep +1), score to 3,
+        // Heavy Factory (income +1, rep -1), score to 4, income 0.  So need to make funds 15 and score 2.
+        PlayerStatChange change = new PlayerStatChange().setFundsChange(1).setPopulationChange(-2);
+        player.applyChange(change);
     }
 
     private void ApplyColorOrTagEffect(Player owningPlayer, Tile specialTile, Tile curiosTile, Player placingPlayer) {
@@ -245,17 +249,21 @@ public class Game {
                 oldScore = player.getScore();
                 player.applyChange(change);
                 int newScore = player.getScore();
+                System.err.println("Instant Action Applied:" + action + " new score:" + newScore);
                 //linesCrossed = getLinesCrossed(oldScore, newScore);
                 oldScore = newScore;
             }
         }
-        // Player is in charge of : Player Adjacentsand Player globals.
+        // Player is in charge of : Player Adjacents and Player globals.
         PlayerStatChange change = player.addTile(tile, position);
+        System.err.println("applying change:" + change);
         player.applyChange(change);
         int newScore = player.getScore();
+        System.err.println("Player change Applied:" + change + " new score:" + newScore);
         //linesCrossed = getLinesCrossed(oldScore, newScore);
         newScore = oldScore;
         ApplyGlobalChanges(tile, player, position);
+        player.applyStats();
         newScore = player.getScore();
         //linesCrossed = getLinesCrossed(oldScore, newScore);
     }
@@ -266,30 +274,31 @@ public class Game {
                 "Heavy Factory",
                 "Community Park"};
         Tile t = null;
+        String tileNumberString = selection.substring(selection.indexOf(':') + 1);
+        String tileName = selection.substring(0, selection.indexOf(':'));
+        int tileNumber = Integer.parseInt(tileNumberString);
+        int tax = 0;
+        if (tileNumber > 2) {
+            tax = 2 * (tileNumber - 2);
+        }
         for (String startName : startTiles) {
-            if (selection.equals(startName)) {
-                t = market.BuyStarterTile(getTileByName(startName));
-                PlayerStatChange change = new PlayerStatChange().setFundsChange(t.getCost());
+            if (tileName.equals(startName)) {
+                t = market.BuyStarterTile(getTileByName(startName), tileNumber);
+                PlayerStatChange change = new PlayerStatChange().setFundsChange(-t.getCost() - tax);
                 player.applyChange(change);
                 break;
             }
         }
         if (t == null) {
-            String tileNumberString = selection.substring(selection.indexOf(':'));
-            int tileNumber = Integer.parseInt(tileNumberString);
-            int tax = 0;
-            if (tileNumber > 2) {
-                tax = 2 * (tileNumber - 2);
-            }
             if (selection.startsWith("Lake:")) {
-                PlayerStatChange change = new PlayerStatChange().setFundsChange(tax);
+                PlayerStatChange change = new PlayerStatChange().setFundsChange(-tax);
                 player.applyChange(change);
                 market.BuyTile(tileNumber); // destroy, drop on the ground, ignore return.
                 t = getTileByName("Lake");
             } else if (selection.startsWith("Tile:")) {
-                PlayerStatChange change = new PlayerStatChange().setFundsChange(t.getCost() + tax);
-                player.applyChange(change);
                 t = market.BuyTile(tileNumber);
+                PlayerStatChange change = new PlayerStatChange().setFundsChange(-t.getCost() - tax);
+                player.applyChange(change);
             }
         }
         return t;

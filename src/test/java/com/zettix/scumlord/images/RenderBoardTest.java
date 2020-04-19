@@ -1,6 +1,8 @@
 package com.zettix.scumlord.images;
 
 import com.zettix.scumlord.Game;
+import com.zettix.scumlord.Player;
+import com.zettix.scumlord.PlayerStatChange;
 import com.zettix.scumlord.hexgrid.HexGrid;
 import com.zettix.scumlord.hexgrid.HexPosition;
 import com.zettix.scumlord.tile.Tile;
@@ -18,7 +20,8 @@ public class RenderBoardTest {
     @Test
     public void render() {
         Game g = new Game();
-        HexGrid board = new HexGrid();
+        Player player = new Player("testPlayer", new PlayerStatChange());
+        HexGrid board = player.getBoard();
         g.Load();
         Set<String> tilenames = g.getTileNames();
         int sz = tilenames.size();
@@ -45,7 +48,7 @@ public class RenderBoardTest {
             }
             idx++;
         }
-        RenderBoard renderBoard = new RenderBoard(board, g, 1800, 1800);
+        RenderBoard renderBoard = new RenderBoard(player, g, 1800, 1800);
         //renderBoard.Render("AllTiles");
     }
 }

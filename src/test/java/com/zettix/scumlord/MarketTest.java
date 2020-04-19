@@ -31,7 +31,7 @@ public class MarketTest {
         assertNotNull("Find Suburbs tile:", suburbs);
         int availableSuburbs = market.getStartTileCounts().get(suburbs);
         assertEquals("Available Suburbs:" ,4, availableSuburbs);
-        Tile t = market.BuyStarterTile(suburbs);
+        Tile t = market.BuyStarterTile(suburbs, 0);
         assertEquals(suburbs, t);
         availableSuburbs = market.getStartTileCounts().get(suburbs);
         assertEquals("Post buy Available Suburbs:" ,3, availableSuburbs);

@@ -1,6 +1,7 @@
 package com.zettix.scumlord.images;
 
 import com.zettix.scumlord.Game;
+import com.zettix.scumlord.Player;
 import com.zettix.scumlord.hexgrid.HexGrid;
 import com.zettix.scumlord.hexgrid.HexPosition;
 import com.zettix.scumlord.tile.Tile;
@@ -16,8 +17,8 @@ import static com.zettix.scumlord.images.ColorSwatch.WHITE;
 
 public class RenderBoard {
 
-    public RenderBoard(HexGrid board, Game game, int xSize, int ySize) {
-        this.board = board;
+    public RenderBoard(Player player, Game game, int xSize, int ySize) {
+        this.player = player;
         this.game = game;
         this.xSize = xSize;
         this.ySize = ySize;
@@ -25,6 +26,8 @@ public class RenderBoard {
     }
 
     public void Render(String filename) {
+
+        HexGrid board = player.getBoard();
 
         BufferedImage image = new BufferedImage(xSize, ySize, BufferedImage.TYPE_INT_ARGB);
         Graphics graphics = image.getGraphics();
@@ -38,7 +41,16 @@ public class RenderBoard {
         graphics2D.fillRect(0, 0, xSize, ySize);
         graphics2D.setBackground(color);
         graphics2D.setColor(WHITE);
-        graphics2D.drawString("Hello!", 0, fontsize);
+        int ygo = 0;
+        graphics2D.drawString("Player:" + player.getName(), 0, fontsize * (ygo + 1));
+        ygo++;
+        graphics2D.drawString("Income:" + player.getIncome(), 0, fontsize * (ygo + 1));
+        ygo++;
+        graphics2D.drawString("Reputation:" + player.getReputation(), 0, fontsize * (ygo + 1));
+        ygo++;
+        graphics2D.drawString("Funds:" + player.getFunds(), 0, fontsize * (ygo + 1));
+        ygo++;
+        graphics2D.drawString("Score:" + player.getScore(), 0, fontsize * (ygo + 1));
         for (HexPosition position : board.getLocations()) {
             Tile tile = board.getTile(position);
             File file = game.getTileImageFile(tile);
@@ -79,7 +91,7 @@ public class RenderBoard {
         }
     }
 
-    private HexGrid board;
+    private Player player;
     private Game game;
     private int yoff = 221;
     private int xoff = 256;

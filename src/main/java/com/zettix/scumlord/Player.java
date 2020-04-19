@@ -4,8 +4,6 @@ import com.zettix.scumlord.hexgrid.HexGrid;
 import com.zettix.scumlord.hexgrid.HexPosition;
 import com.zettix.scumlord.tile.*;
 
-import java.awt.event.ActionListener;
-import java.security.cert.X509Certificate;
 import java.util.*;
 
 public class Player {
@@ -61,44 +59,6 @@ public class Player {
             if (neighbors.contains(p)) {
                 result.add(board.getTile(position));
             }
-        }
-        return result;
-    }
-
-    private PlayerStatChange ApplyColorOrTagGlobalEffect(Tile specialTile, Tile curiosTile) {
-        // if placing, do for all existing tiles everywhere, then do 1by1.
-        // This is run for every global tile in player inventory.
-        PlayerStatChange result = new PlayerStatChange();
-        for (TileAction action : specialTile.getActions()) {
-            Boolean byTag = action.match(TileEffectType.TAG, TileEffectTime.ONGOING, TileAreaEffect.PLAYER_GLOBAL);
-            Boolean byColor = action.match(TileEffectType.COLOR, TileEffectTime.ONGOING, TileAreaEffect.PLAYER_GLOBAL);
-            if (byColor) {
-                SortedSet<SlumColors> targetColors = action.getFilterColors();
-                SlumColors color = curiosTile.getColor();
-                if (targetColors.contains(color)) { // run that action...
-                    PlayerStatChange change = action.getChange();
-                    result.addChange(change);
-                }
-            }
-            if (byTag) {
-                SortedSet<TileTag> targetTags = action.getFilterTags();
-                TileTag tileTag = curiosTile.getTileTag();
-                if (targetTags.contains(tileTag)) {
-                    PlayerStatChange change = action.getChange();
-                    result.addChange(change);
-                }
-            }
-        }
-        return result;
-    }
-
-    private PlayerStatChange ApplyGlobalChanges(Tile tile) {
-        PlayerStatChange result = new PlayerStatChange();
-        HexGrid board = getBoard();
-        Set<HexPosition> positions = globalPlayerTiles;
-        for (HexPosition ongoingPosition : positions) {
-            Tile specialTile = board.getTile(ongoingPosition);
-            result.addChange(ApplyColorOrTagGlobalEffect(specialTile, tile));
         }
         return result;
     }
@@ -163,6 +123,7 @@ public class Player {
                 }
             }
         }
+        System.err.println("CHANGE SO FAR:" + change);
 
         // Second, apply all Existing tile actions.
         // Adjacent tiles:
@@ -190,21 +151,26 @@ public class Player {
                 continue;  // already counted.
             }
             Tile playerGlobalTile = board.getTile(position);
+            System.err.println("          Checking player globals " + playerGlobalTile.getName() + " and " + t.getName());
             for (TileAction action : playerGlobalTile.getActions()) {
                 if (action.match(TileEffectType.COLOR, TileEffectTime.ONGOING, TileAreaEffect.PLAYER_GLOBAL)) {
                     if (action.getFilterColors().contains(t.getColor())) { // serious match here folks...
+                        System.err.println("            g adding " + action.getChange().toString());
                         change.addChange(action.getChange());
                     }
                 }
                 if (action.match(TileEffectType.TAG, TileEffectTime.ONGOING, TileAreaEffect.PLAYER_GLOBAL)) {
                     if (action.getFilterTags().contains(t.getTileTag())) { // serious match here folks...
+                        System.err.println("            g adding " + action.getChange().toString());
                         change.addChange(action.getChange());
                     }
                 }
             }
         }
+        System.out.println("CHANGE NOW:" + change);
 
-        change.addChange(ApplyGlobalChanges(t));
+       // change.addChange(ApplyGlobalChanges(t, p));
+        System.out.println("CHANGE NOW 2:" + change);
         return change;
     }
 
