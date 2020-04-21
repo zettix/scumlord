@@ -52,7 +52,26 @@ public class HexGrid {
         for (HexPosition position : positions) {
             results.add(position);
         }
+
+        String choices = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        int choice = 0;
+        positionToChoiceMap = new HashMap<>();
+        choiceToPositionMap = new HashMap<>();
+        for (HexPosition position : results) {
+            choiceToPositionMap.put(choices.charAt(choice), position);
+            positionToChoiceMap.put(position, choices.charAt(choice));
+            choice++;
+        }
         return results;
+    }
+
+    public HexPosition getPositionByChoice(String choice) {
+        String s = choice.toUpperCase();
+        return choiceToPositionMap.get(s.charAt(0));
+    }
+
+    public String getChoiceByPosition(HexPosition position) {
+        return "" + positionToChoiceMap.get(position);
     }
 
     public Set<HexPosition> getLocations() {
@@ -71,4 +90,6 @@ public class HexGrid {
     }
 
     private final Map<HexPosition, Tile> grid;
+    private Map<Character, HexPosition> choiceToPositionMap;
+    private Map<HexPosition, Character> positionToChoiceMap;
 }

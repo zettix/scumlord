@@ -27,6 +27,10 @@ public class Game {
         doShuffule = true;
     }
 
+    public Market getMarket() {
+        return market;
+    }
+
     public void Load() {
         // Load tiles.
         TileJsonReader reader = new TileJsonReader();
@@ -233,6 +237,11 @@ public class Game {
         }
     }
 
+    public void PlaceTile(Player player, Tile tile, String choice) {
+        HexPosition position = player.getBoard().getPositionByChoice(choice);
+        PlaceTile(player, tile, position);
+    }
+
     public void PlaceTile(Player player, Tile tile, HexPosition position) {
         HexGrid board = player.getBoard();
         // 1: apply instants.
@@ -274,6 +283,22 @@ public class Game {
                 String[] startTiles = {"Suburbs",
                 "Heavy Factory",
                 "Community Park"};
+                if (selection.length() == 1) {
+                    String choices = "abcdefghijklmnopqrstuvwxyz";
+                    String findme = selection.toLowerCase();
+                    int idx = choices.indexOf(findme.charAt(0));
+                    if (idx < 8) {
+                        selection = "Tile:" + idx;
+                    } else if (idx > 22) {
+                            int startSel = idx - 23;
+                            selection = startTiles[startSel] + ":0";
+                        } else {
+                        int startSel = idx - 10;
+                        selection = "Lake:" + startSel;
+                    }
+                }
+
+
         Tile t = null;
         String tileNumberString = selection.substring(selection.indexOf(':') + 1);
         String tileName = selection.substring(0, selection.indexOf(':'));

@@ -8,6 +8,7 @@ import com.zettix.scumlord.tile.enums.*;
 import java.util.*;
 
 public class Player {
+
     public Player(String name, PlayerStatChange change) {
         this.name = name;
         board = new HexGrid();
@@ -17,6 +18,10 @@ public class Player {
         score = change.getPopulationChange();
         globalPlayerTiles = new HashSet<>();
         adjecentEffectTiles = new HashSet<>();
+    }
+
+    public Player(String name) {
+        this(name, new PlayerStatChange().setFundsChange(15));
     }
 
     public HexGrid getBoard() {
