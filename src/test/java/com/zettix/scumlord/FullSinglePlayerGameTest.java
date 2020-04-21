@@ -171,8 +171,7 @@ public class FullSinglePlayerGameTest {
         MegaAssert(86, 23,5, 68, player, 17);
 
 
-        //RenderBoard renderBoard = new RenderBoard(player, game, 1040, 1000);
-        //renderBoard.Render("singlePlayerTest");
-
+        RenderBoard renderBoard = new RenderBoard(player, game);
+        //renderBoard.Render("singlePlayerTest", 1040, 980);
     }
 }

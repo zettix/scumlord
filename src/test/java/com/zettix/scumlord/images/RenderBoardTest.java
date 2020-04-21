@@ -48,7 +48,7 @@ public class RenderBoardTest {
             }
             idx++;
         }
-        RenderBoard renderBoard = new RenderBoard(player, g, 1800, 1800);
-        //renderBoard.Render("AllTiles");
+        RenderBoard renderBoard = new RenderBoard(player, g);
+        //renderBoard.Render("AllTiles", 1800, 1800);
     }
 }

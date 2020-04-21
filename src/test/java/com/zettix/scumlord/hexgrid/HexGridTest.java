@@ -45,7 +45,7 @@ public class HexGridTest {
         grid.setTile(suburb, hexPosition);
         List<HexPosition> openPositions = grid.getOpenPositions();
         assertEquals(openPositions.size(), 6);  // a naked tile.
-        RenderBoard renderBoard = new RenderBoard(player, game, 1000, 1000);
+        RenderBoard renderBoard = new RenderBoard(player, game);
         // renderBoard.Render("getSimpleEvenPositions");
     }
 
@@ -55,7 +55,7 @@ public class HexGridTest {
         grid.setTile(suburb, hexPosition);
         List<HexPosition> openPositions = grid.getOpenPositions();
         assertEquals(openPositions.size(), 6);  // a naked tile.
-        RenderBoard renderBoard = new RenderBoard(player, game, 1000, 1000);
+        RenderBoard renderBoard = new RenderBoard(player, game);
         // renderBoard.Render("getSimpleOddPositions");
     }
 
@@ -75,7 +75,7 @@ public class HexGridTest {
         openPositions = grid.getOpenPositions();
         assertEquals(openPositions.size(), 9);
 
-        RenderBoard renderBoard = new RenderBoard(player, game, 1000, 1000);
+        RenderBoard renderBoard = new RenderBoard(player, game);
         // renderBoard.Render("getOpenPositions");
     }
 

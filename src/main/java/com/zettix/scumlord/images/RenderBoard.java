@@ -7,6 +7,7 @@ import com.zettix.scumlord.hexgrid.HexPosition;
 import com.zettix.scumlord.tile.Tile;
 
 import javax.imageio.ImageIO;
+import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -17,15 +18,62 @@ import static com.zettix.scumlord.images.ColorSwatch.WHITE;
 
 public class RenderBoard {
 
-    public RenderBoard(Player player, Game game, int xSize, int ySize) {
+    public RenderBoard(Player player, Game game) {
         this.player = player;
         this.game = game;
-        this.xSize = xSize;
-        this.ySize = ySize;
+        this.xSize = 0;
+        this.ySize = 0;
+    }
+
+    private void WriteFile(String filename, BufferedImage image) {
+        try {
+            File outputfile = new File(filename + ".png");
+            ImageIO.write(image, "png", outputfile);
+        } catch (IOException ex) {
+            System.err.println("Couldn't save:" + ex.getMessage());
+        }
+    }
+
+    public void PaintPlayerStats(Graphics2D graphics2D, int fontsize) {
+        graphics2D.setColor(WHITE);
+        int ygo = 0;
+        graphics2D.drawString("Player:" + player.getName(), 0, fontsize * (ygo + 1));
+        ygo++;
+        graphics2D.drawString("Income:" + player.getIncome(), 0, fontsize * (ygo + 1));
+        ygo++;
+        graphics2D.drawString("Reputation:" + player.getReputation(), 0, fontsize * (ygo + 1));
+        ygo++;
+        graphics2D.drawString("Funds:" + player.getFunds(), 0, fontsize * (ygo + 1));
+        ygo++;
+        graphics2D.drawString("Score:" + player.getScore(), 0, fontsize * (ygo + 1));
 
     }
 
-    public void Render(String filename) {
+    private void PaintOpenPositions(Graphics2D graphics2D, HexGrid board) {
+        List<HexPosition> openPositions = board.getOpenPositions();
+        File file = game.getOpenTile();
+        Image img;
+        try {
+            img = ImageIO.read(file);
+        } catch (IOException ex) {
+            System.err.println("Bad time:" + ex.getMessage());
+            return;
+        }
+        graphics2D.setColor(Color.DARK_GRAY);
+        for (HexPosition hexPosition : openPositions) {
+            int[] xy = hexPosition.toGrid();
+            xy[1] = ySize - xy[1] - yoff;  // flip y
+            xy[0] = xSize / 2 + xy[0] - xoff / 2; // center
+            graphics2D.drawImage(img, xy[0], xy[1], null);
+            String label = board.getChoiceByPosition(hexPosition);
+            graphics2D.drawString(label, xy[0] + 128, xy[1] + 100);
+        }
+    }
+
+    public void Render(String filename, int xres, int yres) {
+
+        xSize = xres;
+        ySize = yres;
 
         HexGrid board = player.getBoard();
 
@@ -40,17 +88,6 @@ public class RenderBoard {
         graphics2D.setColor(color);
         graphics2D.fillRect(0, 0, xSize, ySize);
         graphics2D.setBackground(color);
-        graphics2D.setColor(WHITE);
-        int ygo = 0;
-        graphics2D.drawString("Player:" + player.getName(), 0, fontsize * (ygo + 1));
-        ygo++;
-        graphics2D.drawString("Income:" + player.getIncome(), 0, fontsize * (ygo + 1));
-        ygo++;
-        graphics2D.drawString("Reputation:" + player.getReputation(), 0, fontsize * (ygo + 1));
-        ygo++;
-        graphics2D.drawString("Funds:" + player.getFunds(), 0, fontsize * (ygo + 1));
-        ygo++;
-        graphics2D.drawString("Score:" + player.getScore(), 0, fontsize * (ygo + 1));
         for (HexPosition position : board.getLocations()) {
             Tile tile = board.getTile(position);
             File file = game.getTileImageFile(tile);
@@ -66,29 +103,9 @@ public class RenderBoard {
                 return;
             }
         }
-
-        List<HexPosition> openPositions = board.getOpenPositions();
-        File file = game.getOpenTile();
-        Image img;
-        try {
-            img = ImageIO.read(file);
-        } catch (IOException ex) {
-            System.err.println("Bad time:" + ex.getMessage());
-            return;
-        }
-        for (HexPosition hexPosition : openPositions) {
-            int[] xy = hexPosition.toGrid();
-            xy[1] = ySize - xy[1] - yoff;  // flip y
-            xy[0] = xSize / 2 + xy[0] - xoff / 2; // center
-            graphics2D.drawImage(img, xy[0], xy[1], null);
-        }
-
-        try {
-            File outputfile = new File(filename + ".png");
-            ImageIO.write(image, "png", outputfile);
-        } catch (IOException ex) {
-            System.err.println("Couldn't save:" + ex.getMessage());
-        }
+        PaintOpenPositions(graphics2D, player.getBoard());
+        PaintPlayerStats(graphics2D, fontsize);
+        WriteFile(filename, image);
     }
 
     private Player player;
